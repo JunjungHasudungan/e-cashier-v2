@@ -5,8 +5,9 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     {{-- start komponent alert data produk kosong --}}
-                    <template x-if="listProduct.length == 0">
-                        <div class="flex items-center p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert">
+                    <template x-if="isEmpty && listProduct.length === 0">
+                        <div
+                            class="flex items-center p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert">
                             <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                             </svg>
@@ -110,13 +111,13 @@
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                                         {{-- untuk  nomor data --}}
                                         <td x-text="index + 1" class="px-6 py-4"></td>
-                                        
+
                                         {{-- data nama produk --}}
                                         <th x-text="product.name" scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"></th>
-                                        
+
                                         {{-- data kode produk --}}
                                         <td x-text="product.code" class="px-6 py-4"></td>
-                                        
+
                                         {{-- data  harga produk--}}
                                         <td x-text="product.price" class="px-6 py-4"></td>
 
