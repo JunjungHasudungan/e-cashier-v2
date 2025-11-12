@@ -3,10 +3,19 @@ function stateListProduct() {
     return {
         listProduct: [], // registrasi nama array dan tipe data array kosong
         isEmpty: false, // inisialisasi var isEmpty untuk handle kondisi
+        currentView: 'table-product', // inisialisasi variable currentView untuk memanipulasi
         // menggunakan fungsi init untuk menginisilasisasi fungsi pertama kali dirender
         init() {
             // menggunakan kembali fungsi getListProduct
             this.getListProduct()
+        },
+
+        // membuat event click untuk membuka form create produk
+        createProduct() {
+            this.currentView = 'create-product'
+        },
+        closeForm(){
+            this.currentView = 'table-product'
         },
 
         // membuat fungsi mengambil data product dari BE
