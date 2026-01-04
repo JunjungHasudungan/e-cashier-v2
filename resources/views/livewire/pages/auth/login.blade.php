@@ -22,10 +22,10 @@ new #[Layout('layouts.guest')] class extends Component
         Session::regenerate();
 
         if (auth()->user()->role == 'admin') {
-            
+
             $this->redirectIntended(route('admin-dashboard', absolute: false), navigate: true);
         } else {
-             $this->redirectIntended(route('cashier-dashobard', absolute: false), navigate: true);
+             $this->redirectIntended(route('cashier-dashboard', absolute: false), navigate: true);
         }
     }
 }; ?>

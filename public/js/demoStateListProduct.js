@@ -1,8 +1,17 @@
-function stateListProduct() {
+function demoStateListProduct() {
     // mengembalikan data objek stateListProduct
     return {
         // registrasi nama array dan tipe data array kosong
         listProduct: [],
+
+        // properti untuk menampilkan-menyembunyikan card
+        isCurrentCard: 'table-product',
+
+        // properti untuk menampung objek produk
+        product: {name: '', description: '', price: '', size:'', quantity: ''},
+
+        // properti untuk menampung objek listUkuran
+        listSize: {s: 'kecil', m: 'sedang', xl: 'besar'},
 
         // menggunakan fungsi init untuk menginisilasisasi fungsi pertama kali dirender
         init() {
@@ -28,6 +37,17 @@ function stateListProduct() {
                 // tandai bahwa data sudah selesai dimuat (berhasil atau gagal)
                 this.isEmpty = true
             }
+        },
+
+        // fungsi handle tombol card 
+        btnAddProduct() {
+            this.isCurrentCard = 'create-product'
+        },
+        btnCancelAddProduct() {
+            this.isCurrentCard = 'table-product'
+        }, 
+        sendDataProduct() {
+            console.log('mau mengirim data...', this.product)
         }
     }
 }

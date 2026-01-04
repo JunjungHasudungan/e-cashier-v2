@@ -12,6 +12,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         {{-- melakukan registrasi alamat stateListProduct.js --}}
         <script src="{{ asset('js/stateListProduct.js') }}"></script>
+        <script src="{{ asset('js/demoStateListProduct.js') }}"></script>
 
         {{-- menyisipkan link cdn css dari flowbite   --}}
         <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />

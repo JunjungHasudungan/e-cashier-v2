@@ -8,7 +8,8 @@ class AdminController extends Controller
 {
     // pembuatan fungsi index untuk melemparkan tampilan halaman
     public function index() {
-        return view('admin.index');
+        // return view('admin.index');
+        return view('admin.index_demo');
     }
 
     // membuat fungsi untuk mengambil data product beserta relasi table stock
