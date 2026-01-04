@@ -29,12 +29,17 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    // ROUTE FOR ADMIN
+    // ====== ROUTE FOR ADMIN =======
     Route::get('admin-dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
 
     Route::view('profits', 'admin.profits.index')->name('profits');
     // route untuk mengambil list-product
     Route::get('list-product', [AdminController::class, 'getListProduct'])->name('list-product');
+
+    // route untuk melakukan store data demo create produk
+    Route::post('demo-store-product', [AdminController::class, 'demoStoreDataProduct'])->name('demo-store-product');
+
+
     // ROUTES FOR CASHIER
     Route::get('cashier-dashboard', [CashierController::class, 'index'])->name('cashier-dashboard');
 });

@@ -10,8 +10,8 @@
 
 
                     <!-- Modal toggle -->
-                    <button 
-                        type="button" 
+                    <button
+                        type="button"
                         x-on:click="btnAddProduct()"
                         x-show="isCurrentCard == 'table-product'"
                         class="inline-flex items-center mb-2 text-white bg-blue-400 rounded-lg hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
@@ -20,7 +20,7 @@
                     </button>
 
                     <!-- Main modal -->
-                    <div x-show="isCurrentCard == 'create-product'" 
+                    <div x-show="isCurrentCard == 'create-product'"
                         class="bg-gray-200 fixed inset-0 z-50 flex items-center justify-center w-full bg-black/40">
                         <div class="relative p-4 w-full max-w-2xl max-h-full">
                             <!-- Modal content -->
@@ -30,13 +30,16 @@
                                     <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
                                         <div class="col-span-2 sm:col-span-1">
                                             <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Nama Produk</label>
-                                            <input 
-                                                type="text" 
+                                            <input
+                                                type="text"
                                                 x-model="product.name"
-                                                id="name" 
-                                                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" 
+                                                id="name"
+                                                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                                                 placeholder="Ketikkan nama produk..."
                                             >
+                                            <template x-if="errors.name">
+                                                <p class="mt-2.5 text-sm text-red-800" x-text="errors.name"></p>
+                                            </template>
                                         </div>
                                         <div class="col-span-2 sm:col-span-1">
                                             <label for="quantity" class="block mb-2.5 text-sm font-medium text-heading">Jumlah Produk</label>
@@ -45,16 +48,22 @@
                                                     <option :value="index" x-text="index"></option>
                                                 </template>
                                             </select>
+                                            <template x-if="errors.quantity">
+                                                <p class="mt-2.5 text-sm text-red-800" x-text="errors.quantity"></p>
+                                            </template>
                                         </div>
                                         <div class="col-span-2 sm:col-span-1">
                                             <label for="price" class="block mb-2.5 text-sm font-medium text-heading">Harga</label>
-                                            <input 
-                                                type="number" 
-                                                x-model="product.price" 
-                                                id="price" 
-                                                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" 
-                                                placeholder="Rp.10000" 
+                                            <input
+                                                type="number"
+                                                x-model="product.price"
+                                                id="price"
+                                                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                                                placeholder="Rp.10000"
                                             >
+                                            <template x-if="errors.price">
+                                                <p class="mt-2.5 text-sm text-red-800" x-text="errors.price"></p>
+                                            </template>
                                         </div>
                                         <div class="col-span-2 sm:col-span-1">
                                             <label for="size" class="block mb-2.5 text-sm font-medium text-heading">Ukuran</label>
@@ -64,16 +73,22 @@
                                                     <option :value="size"  x-text="size"></option>
                                                 </template>
                                             </select>
+                                            <template x-if="errors.size">
+                                                <p class="mt-2.5 text-sm text-red-800" x-text="errors.size"></p>
+                                            </template>
                                         </div>
                                         <div class="col-span-2">
                                             <label for="description" class="block mb-2.5 text-sm font-medium text-heading">Keterangan Produk</label>
-                                            <textarea 
+                                            <textarea
                                                 x-model="product.description"
-                                                id="description" 
-                                                rows="4" 
-                                                class="block bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body" 
+                                                id="description"
+                                                rows="4"
+                                                class="block bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body"
                                                 placeholder="Ketikkan keterangan produk disini...">
-                                            </textarea>                    
+                                            </textarea>
+                                            <template x-if="errors.description">
+                                                <p class="mt-2.5 text-sm text-red-800" x-text="errors.description"></p>
+                                            </template>
                                         </div>
                                     </div>
                                     <div class="flex items-center space-x-2 border-default pt-2">
@@ -81,8 +96,8 @@
                                             <svg class="w-4 h-4 me-1.5 -ms-0.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/></svg>
                                         Simpan
                                         </button>
-                                        <button 
-                                            type="button" 
+                                        <button
+                                            type="button"
                                             x-on:click="btnCancelAddProduct"
                                             class="rounded-lg text-body bg-gray-400 box-border border border-default-medium hover:bg-gray-600 hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
                                             Batal

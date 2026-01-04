@@ -1,6 +1,8 @@
 <?php
 // penamaan alamat file didalam folder secara otomatis dibuat
 namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -28,6 +30,37 @@ class AdminController extends Controller
             return response()->json([
                 'message'   => $error->getMessage()
             ], 500); // mengembalikan pesan error internal server error
+        }
+    }
+
+    // fungsi untuk melakukan logic bisnis penyimpanan data baru ke database
+    public function demoStoreDataProduct(Request $request) {
+        try {
+            // melakukan validasi inputan yang dikiirm dari FE
+             $validator = Validator::make($request->all(), [
+                'name' => 'required|unique:products|max:255',
+                'body' => 'required',
+            ]);
+
+            // pengecekan jika data yang dcek tidak valid
+            if($validator->fails()) {
+
+                // mengirimkan response pesan error ke FE
+                return response()->json([
+                    'errors'   => $validator->errors()
+                ], 422);
+            }
+
+            // mengambik data yang dikirim kedalam objek validated
+            $validated = $validator->validated();
+
+            dd($validated);
+
+        } catch (\Exception $error) {
+            // mengembalikan pesan error internal server error
+            return response()->json([
+                'message'   => $error->getMessage()
+            ], 500);
         }
     }
 }
