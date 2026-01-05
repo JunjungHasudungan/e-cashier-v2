@@ -19,8 +19,8 @@ function demoStateListProduct() {
         // properti untuk menampung objek listUkuran
         listSize: {s: 'kecil', m: 'sedang', xl: 'besar'},
 
-        // variable untuk penampung kebeneran valid data
-        isValid: false,
+        // variable untuk penampung nilai process loading
+        isProcess: false,
 
         // menggunakan fungsi init untuk menginisilasisasi fungsi pertama kali dirender
         init() {
@@ -80,6 +80,9 @@ function demoStateListProduct() {
         async sendDataProduct() {
             // pembuatan try and catch untuk menangkap error ketika pengiriman data ke BE
             try {
+                // memberi nilai true pada variable isProcess
+                this.isProcess = true
+                // awal memberi nilai string kosong untuk seluruh objek errors
                 for (let key in this.errors) {
                     this.errors[key] = ''
                 }
@@ -128,9 +131,13 @@ function demoStateListProduct() {
                 }else {
                     console.log(error)
                 }
+            }finally {
+                // mengembalikan nilai proses ke nilai awal menjadi false
+                this.isProcess = false
             }
         },
         resetFields() {
+            // memberi nilai kosong kepada objek produk
             Object.assign(this.product, {
                 name: '',
                 quantity: '',
@@ -140,6 +147,7 @@ function demoStateListProduct() {
             })
         },
         resetErrors() {
+            // memberi nilai kosong kepada objek errors
             Object.assign(this.errors, {
                 name: '',
                 quantity: '',
