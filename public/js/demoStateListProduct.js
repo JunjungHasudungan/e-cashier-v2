@@ -7,6 +7,9 @@ function demoStateListProduct() {
         // properti untuk menampilkan-menyembunyikan card
         isCurrentCard: 'table-product',
 
+        // properti untuk menampilkan-pesan alert response
+        responseMessage: {status: '', content: ''},
+
         // variable untuk menampung objek produk
         product: {name: '', description: '', price: '', size:'', quantity: ''},
 
@@ -15,9 +18,6 @@ function demoStateListProduct() {
 
         // properti untuk menampung objek listUkuran
         listSize: {s: 'kecil', m: 'sedang', xl: 'besar'},
-
-        // properti untuk seluruh label
-        fieldName: {name: 'Nama', price: 'Harga', description: 'Keterangan', category: 'Kategori', quantity: 'Jumlah'},
 
         // variable untuk penampung kebeneran valid data
         isValid: false,
@@ -52,7 +52,7 @@ function demoStateListProduct() {
         btnAddProduct() {
             this.isCurrentCard = 'create-product'
         },
-        btnCancelAddProduct() {
+        btnCloseAddProduct() {
             // mengambil data beberapa data yang ada didalam field inputan
             let isAnyFilled = Object.values(this.product).some(value => value !== '')
 
@@ -77,54 +77,65 @@ function demoStateListProduct() {
             this.isCurrentCard = 'table-product'
              this.resetErrors()
         },
-        sendDataProduct() {
+        async sendDataProduct() {
             // pembuatan try and catch untuk menangkap error ketika pengiriman data ke BE
             try {
-
-                // melakukan looping objek produk agar membongkar data inputan setiap properti
-                for (let key in this.product) {
-
-                    // pengecekan jika objek berdasarkan key dari objek tidak ada data inputan
-                    if(!this.product[key].toString().trim()) {
-
-                        // memasukkan key kedalan fields
-                        let label = this.fieldName[key] || key
-
-                        // memberikan pesan error ke setiap label berdsarkan nama properti produk
-                        this.errors[key] = `${label} tidak boleh kosong`
-
-                        // memberhentikan eksekusi dengan memberi nilai isValid is false
-                        this.isValid = false
-                    }else {
-                        // memberikan pesan error kosong karna pengisian data setiap field terisi dengan benar
-                         this.errors[key] = ''
-                    }
-
-                     if (!this.isValid) return
-
-                    // mengumpulkan seluruh data objek produk kedalam objek agar mudah dikirim
-                    let sendProduct = {
-                        name: this.product.name,
-                        quantity: this.product.quantity,
-                        price: this.product.price,
-                        category: this.product.category,
-                        description: this.product.description
-                    }
-
-                    // mengirim data ke BE lewat jalur endpoint
+                for (let key in this.errors) {
+                    this.errors[key] = ''
                 }
+
+                // mengumpulkan seluruh data objek produk kedalam objek agar mudah dikirim
+                let sendProduct = {
+                    name: this.product.name,
+                    quantity: this.product.quantity,
+                    price: this.product.price,
+                    size: this.product.size,
+                    description: this.product.description
+                }
+
+                // mengirim data ke BE lewat jalur endpoint
+                const result = await axios.post('demo-store-product', sendProduct)
+
+                // membersihkan seluruh field inputan
+                this.resetFields()
+
+                //menutup form create product
+                this.btnCloseAddProduct()
+
+                // menampilkan pesan dari response BE
+                this.responseMessage.status = 'success'
+                this.responseMessage.content = result.data.message
+
+                // menampilkan pesan alert success
+                setTimeout(() => {
+                    this.responseMessage.status = ''
+                }, 2000);
+
+                // memanggil fungsi getListDataProduct
+                this.getListProduct()
+
             } catch (error) {
-
+                if (error.response && error.response.status === 422) {
+                    let responseError = error.response.data.errors
+                    // reset error FE dulu
+                    for (let key in this.errors) {
+                        this.errors[key] = ''
+                    }
+                     // mapping error BE → FE
+                    for (let field in responseError) {
+                        this.errors[field] = responseError[field][0] // ambil pesan pertama
+                    }
+                }else {
+                    console.log(error)
+                }
             }
-
-            console.log('mau mengirim data...', this.product)
         },
         resetFields() {
             Object.assign(this.product, {
                 name: '',
                 quantity: '',
                 price: '',
-                category: '',
+                size: '',
                 description: ''
             })
         },
@@ -133,7 +144,7 @@ function demoStateListProduct() {
                 name: '',
                 quantity: '',
                 price: '',
-                category: '',
+                size: '',
                 description: ''
             })
         }

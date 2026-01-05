@@ -4,6 +4,16 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     {{-- start alert dialog --}}
+                        <div x-show="responseMessage.status === 'success'"
+                            x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="opacity-0 scale-90"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-300"
+                            x-transition:leave-start="opacity-100 scale-100"
+                            x-transition:leave-end="opacity-0 scale-90"
+                            class="p-4 mb-4 text-sm text-green-800 rounded-base bg-green-200 rounded-lg" role="alert">
+                            <span x-text="responseMessage.content" class="font-medium"></span>
+                        </div>
                     {{-- end alert dialog --}}
 
                     {{-- start komponent toggle form create product --}}
@@ -44,6 +54,7 @@
                                         <div class="col-span-2 sm:col-span-1">
                                             <label for="quantity" class="block mb-2.5 text-sm font-medium text-heading">Jumlah Produk</label>
                                             <select x-model="product.quantity" id="quantity" class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand px-3 py-2.5 shadow-xs placeholder:text-body">
+                                                 <option selected="">Pilih Jumlah</option>
                                                 <template x-for="index in 10" :key="index">
                                                     <option :value="index" x-text="index"></option>
                                                 </template>
@@ -98,7 +109,7 @@
                                         </button>
                                         <button
                                             type="button"
-                                            x-on:click="btnCancelAddProduct"
+                                            x-on:click="btnCloseAddProduct"
                                             class="rounded-lg text-body bg-gray-400 box-border border border-default-medium hover:bg-gray-600 hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
                                             Batal
                                         </button>

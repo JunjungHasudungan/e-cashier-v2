@@ -13,7 +13,7 @@ class Product extends Model
     protected $table = "products";
 
     // registrasi nama field products
-    protected $fillable = ['name', 'code', 'price', 'size'];
+    protected $fillable = ['name', 'price', 'size', 'description'];
 
     // pembuatan nama fungsi relasi products ke table stocks
     public function stocks() {

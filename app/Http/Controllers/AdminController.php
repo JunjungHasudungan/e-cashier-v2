@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -38,8 +39,19 @@ class AdminController extends Controller
         try {
             // melakukan validasi inputan yang dikiirm dari FE
              $validator = Validator::make($request->all(), [
-                'name' => 'required|unique:products|max:255',
-                'body' => 'required',
+                'name' => 'required|unique:products|min:3',
+                'quantity' => 'required',
+                'price' => 'required',
+                'size' => 'required',
+                'description' => 'required|min:5',
+            ],[
+                'name.required' => 'Nama produk wajib diisi',
+                'name.unique'   => 'Nama produk sudah digunakan',
+                'name.min'      => 'Nama minimal 3 karaktek',
+                'quantity'      => 'Jumlah Produk wajib dipilih',
+                'price'         => 'Harga Produk wajib diisi',
+                'size'          => 'Ukuran Produk wajib dipilih',
+                'description'   => 'Keterangan Produk wajib diisi',
             ]);
 
             // pengecekan jika data yang dcek tidak valid
@@ -51,10 +63,28 @@ class AdminController extends Controller
                 ], 422);
             }
 
-            // mengambik data yang dikirim kedalam objek validated
+            // mengambil data yang dikirim kedalam variable array
             $validated = $validator->validated();
 
-            dd($validated);
+            // menyimpan data kedalam table products
+            DB::insert('INSERT INTO products
+                (name, price, size, description, created_at) values (?, ?, ?, ?, ?)', [
+                $validated['name'], $validated['price'], $validated['size'], $validated['description'], now()
+            ]);
+
+            // mengambil id product terakhir yang baru dibuat
+            $productId = DB::getPdo()->lastInsertId();
+
+            // menyimpan stock product
+            DB::insert('INSERT INTO stocks
+                (product_id, quantity, status, created_by, created_at) values (?, ?, ?, ?, ?)', [
+                    $productId, $validated['quantity'], 'in-stock', auth()->user()->name, now()
+            ]);
+
+            // mengembalikan response berhasil menyimpan data baru
+            return response()->json([
+                'message'   => 'data produk berhasil disimpan..',
+            ], 201);
 
         } catch (\Exception $error) {
             // mengembalikan pesan error internal server error
