@@ -98,7 +98,7 @@
                     </svg>
 
                     {{-- melakukan validasi keterangan tombol --}}
-                    <span x-text="isProcess ? 'Loading': 'Simpan'">  </span>
+                    <span x-text="isProcess ? 'Process': 'Simpan'">  </span>
                 </button>
                 <button
                     type="button"

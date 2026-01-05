@@ -45,7 +45,7 @@
                     <td x-text="product.size" class="px-6 py-4">
 
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 py-4">
                     {{-- start pengecekan jumlah stok produk --}}
                     <template x-if="product.stocks">
                         <template x-for="stock in product.stocks" :key="stock.id">
