@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
-
 class AdminController extends Controller
 {
     // pembuatan fungsi index untuk melemparkan tampilan halaman
@@ -90,6 +89,30 @@ class AdminController extends Controller
             // mengembalikan pesan error internal server error
             return response()->json([
                 'message'   => $error->getMessage()
+            ], 500);
+        }
+    }
+
+    // function untuk melakukan penghapusn dat produk
+    public function demoDeleteProduct($productId) {
+        try {
+                // mengambil data objek produk
+
+               DB::transaction(function() use ($productId) {
+                    // menghapus data stock
+                     DB::table('stocks')->where('product_id', $productId)->delete();
+
+                    // menghapus data produk
+                    DB::table('products')->where('id', $productId)->delete();
+               });
+
+            return response()->json([
+                'message'    => 'data produk berhasil dihapus..'
+            ], 200);
+
+        } catch (\Exception $error) {
+            return response()->json([
+                'message'    => $error->getMessage()
             ], 500);
         }
     }

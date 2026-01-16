@@ -39,6 +39,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // route untuk melakukan store data demo create produk
     Route::post('demo-store-product', [AdminController::class, 'demoStoreDataProduct'])->name('demo-store-product');
 
+    // route untuk melakukn penghapusan demo delete produk
+    Route::delete('demo-delete-product/{productId}', [AdminController::class, 'demoDeleteProduct'])->name('demo-delete-product');
+
 
     // ROUTES FOR CASHIER
     Route::get('cashier-dashboard', [CashierController::class, 'index'])->name('cashier-dashboard');

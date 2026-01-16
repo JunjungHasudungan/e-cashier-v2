@@ -3,21 +3,11 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    {{-- start alert dialog --}}
-                        <div
-                            {{-- directive untuk menampilkan pesan status response  --}}
-                            x-show="responseMessage.status === 'success'"
-                            x-transition:enter="transition ease-out duration-300"
-                            x-transition:enter-start="opacity-0 scale-90"
-                            x-transition:enter-end="opacity-100 scale-100"
-                            x-transition:leave="transition ease-in duration-300"
-                            x-transition:leave-start="opacity-100 scale-100"
-                            x-transition:leave-end="opacity-0 scale-90"
-                            class="p-4 mb-4 text-sm text-green-800 rounded-base bg-green-200 rounded-lg" role="alert">
-                            <span x-text="responseMessage.content" class="font-medium"></span>
+                     <template x-if="listProduct.length == 0">
+                        <div class="p-4 mb-4 text-sm text-fg bg-blue-600 rounded-sm" role="alert">
+                            <span class="font-medium">Data produk belum tersedia..</span> 
                         </div>
-                    {{-- end alert dialog --}}
-
+                    </template>
                     {{-- start komponent toggle form create product --}}
                     <!-- Modal toggle -->
                     <button

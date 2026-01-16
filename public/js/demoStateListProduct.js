@@ -105,17 +105,11 @@ function demoStateListProduct() {
                 //menutup form create product
                 this.btnCloseAddProduct()
 
-                // menampilkan pesan dari response BE
-                this.responseMessage.status = 'success'
-                this.responseMessage.content = result.data.message
+                // memanggil fungsi getListDataProduct
+                await this.getListProduct()
 
                 // menampilkan pesan alert success
-                setTimeout(() => {
-                    this.responseMessage.status = ''
-                }, 2000);
-
-                // memanggil fungsi getListDataProduct
-                this.getListProduct()
+                swalSuccess(result.data.message)
 
             } catch (error) {
                 if (error.response && error.response.status === 422) {
@@ -131,9 +125,6 @@ function demoStateListProduct() {
                 }else {
                     console.log(error)
                 }
-            }finally {
-                // mengembalikan nilai proses ke nilai awal menjadi false
-                this.isProcess = false
             }
         },
         resetFields() {
@@ -155,6 +146,33 @@ function demoStateListProduct() {
                 size: '',
                 description: ''
             })
+        },
+
+        // fungsi untuk melakukan konfirmasi
+        btnConfirmDelete(productId) {
+           // melakukan confirmasi
+           confirmDelete('Yakin dihapus?', async(result)=> {
+            if(!result.isConfirmed) {
+                return
+            }
+
+            // menggunakan swal loading
+            await swalLoading('Menghapus data produk', async(result)=> {
+                try {
+                    // mengirim parameter melalui url back-end
+                    const result = await axios.delete(`demo-delete-product/${productId}`)
+
+                    // mengambil data produk kembali
+                    await this.getListProduct()
+
+                    // menampilkan pesan sukses
+                    swalSuccess(result.data.message)
+                    
+                } catch (error) {
+                    swalAlert('error', result.data.message)
+                }
+            })
+           })
         }
     }
 }
