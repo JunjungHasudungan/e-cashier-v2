@@ -10,9 +10,13 @@ class AdminController extends Controller
 {
     // pembuatan fungsi index untuk melemparkan tampilan halaman
     public function index() {
-        // return view('admin.index');
-        return view('admin.index_demo');
+        return view('admin.index');
+        // return view('admin.index_demo');
     }
+
+    public function storeProduct() {
+        dd('menyimpan data..');
+     }
 
     // membuat fungsi untuk mengambil data product beserta relasi table stock
     public function getListProduct() {
@@ -96,8 +100,6 @@ class AdminController extends Controller
     // function untuk melakukan penghapusn dat produk
     public function demoDeleteProduct($productId) {
         try {
-                // mengambil data objek produk
-
                DB::transaction(function() use ($productId) {
                     // menghapus data stock
                      DB::table('stocks')->where('product_id', $productId)->delete();

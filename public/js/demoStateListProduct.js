@@ -122,6 +122,7 @@ function demoStateListProduct() {
                     for (let field in responseError) {
                         this.errors[field] = responseError[field][0] // ambil pesan pertama
                     }
+                    this.isProcess = false
                 }else {
                     console.log(error)
                 }

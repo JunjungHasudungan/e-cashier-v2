@@ -36,6 +36,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // route untuk mengambil list-product
     Route::get('list-product', [AdminController::class, 'getListProduct'])->name('list-product');
 
+    // mengirim data ke BE
+    Route::post('store-product', [AdminController::class, 'storeProduct'])->name('store-product');
+
     // route untuk melakukan store data demo create produk
     Route::post('demo-store-product', [AdminController::class, 'demoStoreDataProduct'])->name('demo-store-product');
 
