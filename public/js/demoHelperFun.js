@@ -17,7 +17,6 @@ function swalSuccess(messge) {
     });
 }
 
-
 function confirmDelete(message = "", callback) {
     Swal.fire({
         title: message,

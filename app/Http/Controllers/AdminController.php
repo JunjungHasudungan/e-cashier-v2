@@ -14,9 +14,28 @@ class AdminController extends Controller
         // return view('admin.index_demo');
     }
 
-    public function storeProduct() {
-        dd('menyimpan data..');
-     }
+    public function storeProduct(Request $request) {
+        try{
+            $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:products|min:3',
+            'quantity' => 'required',
+            ],[
+                'name.required' => 'Nama produk wajib disi..',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'errors'    => $validator->errors()
+                ], 422);
+            }
+
+            dd($validator);
+        } catch(\Exception $error) {
+            return response()->json([
+                'errors'    => $error->getMessage()
+            ], 500);
+        }
+    }
 
     // membuat fungsi untuk mengambil data product beserta relasi table stock
     public function getListProduct() {

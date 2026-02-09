@@ -37,6 +37,11 @@
                                                 class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                                                 placeholder="Type product name"
                                             >
+                                            {{-- menampilkan pesan error nama produk --}}
+                                            <template x-if="errors.name">
+                                                <p x-text="errors.name" class="mt-2.5 text-sm text-red-400"></p>
+                                            </template>
+
                                         </div>
                                         <div class="col-span-2 sm:col-span-1">
                                             <label

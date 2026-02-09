@@ -83,9 +83,7 @@ function demoStateListProduct() {
                 // memberi nilai true pada variable isProcess
                 this.isProcess = true
                 // awal memberi nilai string kosong untuk seluruh objek errors
-                for (let key in this.errors) {
-                    this.errors[key] = ''
-                }
+                this.resetErrors()
 
                 // mengumpulkan seluruh data objek produk kedalam objek agar mudah dikirim
                 let sendProduct = {
@@ -168,7 +166,7 @@ function demoStateListProduct() {
 
                     // menampilkan pesan sukses
                     swalSuccess(result.data.message)
-                    
+
                 } catch (error) {
                     swalAlert('error', result.data.message)
                 }

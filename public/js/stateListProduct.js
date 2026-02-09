@@ -57,11 +57,12 @@ function stateListProduct() {
 
         // fungsi untuk mengirim data keback-end
         async sendDataProduct() {
-            // mengosongkan seluruh field objek errors
-            for(let key in this.errors) {
-                this.errors[key] = ''
-             }
-             console.log(this.product)
+            try {
+                for(let key in this.errors) {
+                    this.errors[key] = ''
+                }
+
+                console.log(this.product)
              // mengumpulkan data kedalam objek baru
              let newDataProduct = {
                 name: this.product.name,
@@ -73,6 +74,25 @@ function stateListProduct() {
 
              // mengirim data ke BE lewat jalur store-post
             await axios.post('store-product', newDataProduct)
+             } catch(error) {
+                if(error.response && error.response.status == 422) {
+                   let responseErrorBe = error.response.data.errors
+
+                   // membersikan error di FE terlebih dahulu
+                   for(let key in this.errors) {
+                        this.errors[key] = ''
+                    }
+
+                    // membongkar data responseErrorBe dengan perulangan
+                    for(let key in responseErrorBe) {
+                        this.errors[key] = responseErrorBe[key][0]
+                     }
+                }else {  }
+                console.log(error)
+              }
+            // mengosongkan seluruh field objek errors
+
+
          },
 
         // membuat fungsi mengambil data product dari BE
