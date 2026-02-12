@@ -16,20 +16,46 @@ class AdminController extends Controller
 
     public function storeProduct(Request $request) {
         try{
+            // melakukan validasi seluruh pengiriman request
             $validator = Validator::make($request->all(), [
             'name' => 'required|unique:products|min:3',
+            'size' => 'required',
+            'price' => 'required',
             'quantity' => 'required',
+            'description' => 'required',
             ],[
                 'name.required' => 'Nama produk wajib disi..',
+                'size.required' => 'Ukuran Wajib dipilh',
+                'price.required' => 'Harga produk wajib disi..',
+                'quantity.required' => 'Jumlah produk wajib dipilih..',
+                'description.required' => 'Keterangan produk wajib disi..',
             ]);
 
+            // mengecek jika ada pengiriman yang tidak sesuai required
             if ($validator->fails()) {
                 return response()->json([
                     'errors'    => $validator->errors()
                 ], 422);
             }
 
-            dd($validator);
+            // mengumpulkan seluruh data request kedalam array
+            $validated = $validator->validated();
+
+            // melakukan insert data kedalam table products
+            $product = DB::table('products')->insert([
+                'name' =>  $validated['name'],
+                'size' => $validated['size'],
+                'price' => $validated['price'],
+                // 'quantity' => $validated['name'],
+                'description' => $validated['description'],
+            ]);
+
+            // mengambil data id product
+            $productId = DB::getPdo()->lastInsertId();
+
+            dd($productId);
+
+
         } catch(\Exception $error) {
             return response()->json([
                 'errors'    => $error->getMessage()

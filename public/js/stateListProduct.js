@@ -86,9 +86,10 @@ function stateListProduct() {
                     // membongkar data responseErrorBe dengan perulangan
                     for(let key in responseErrorBe) {
                         this.errors[key] = responseErrorBe[key][0]
-                     }
-                }else {  }
-                console.log(error)
+                    }
+                }else {
+                    console.log(error)
+                }
               }
             // mengosongkan seluruh field objek errors
 
