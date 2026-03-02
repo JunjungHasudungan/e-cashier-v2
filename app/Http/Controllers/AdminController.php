@@ -53,7 +53,17 @@ class AdminController extends Controller
             // mengambil data id product
             $productId = DB::getPdo()->lastInsertId();
 
-            dd($productId);
+            // melakukan insert data ke table stocks
+            DB::insert('INSERT INTO stocks
+            (quantity, product_id, status, created_by, created_at) values
+            (?, ?, ?, ?, ?)',
+            [ $validated['quantity'],  $productId, 'in-stock', auth()->user()->name,  now()
+            ]);
+
+            // mengirim response berhasil ke front-end
+            return response()->json([
+                'message'    => 'Created product successfully'
+            ], 201);
 
 
         } catch(\Exception $error) {

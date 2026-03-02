@@ -16,6 +16,9 @@ function stateListProduct() {
         // menambahkan properti untuk menampilkan / menutup card setiap component
         isVisable:'card-table',
 
+        // variable penampung nilai untuk kondisi process pengiriman
+        isProcessSubmit: false,
+
         // menggunakan fungsi init untuk menginisilasisasi fungsi pertama kali dirender
         init() {
             // menggunakan kembali fungsi getListProduct
@@ -36,12 +39,14 @@ function stateListProduct() {
                 // jika user benar melakukan konfirmasi -> tutup dan reset
                 if(confirmation) {
                     this.resetField()
+                    this.resetFieldErrors()
                     this.isVisable = 'card-table'
                 }
                 return
             }
             // this.resetField()
             this.isVisable = 'card-table'
+            this.resetFieldErrors()
         },
 
         // fungsi untuk reset field product
@@ -55,14 +60,27 @@ function stateListProduct() {
             });
           },
 
+        // fungsi untuk reset field error product
+         resetFieldErrors() {
+            Object.assign(this.errors, {
+                name: '',
+                price: '',
+                quantity: '',
+                size: '',
+                description: '',
+            });
+          },
+
         // fungsi untuk mengirim data keback-end
         async sendDataProduct() {
             try {
+                // memberi nilai isProcessSubmit menjadi true
+                this.isProcessSubmit = true
+
                 for(let key in this.errors) {
                     this.errors[key] = ''
                 }
 
-                console.log(this.product)
              // mengumpulkan data kedalam objek baru
              let newDataProduct = {
                 name: this.product.name,
@@ -73,7 +91,20 @@ function stateListProduct() {
               }
 
              // mengirim data ke BE lewat jalur store-post
-            await axios.post('store-product', newDataProduct)
+            const result = await axios.post('store-product', newDataProduct)
+
+            // melakukan reset seluruh field
+            this.resetField()
+
+            // memanggil kembali data baru dari getLisProduct
+            await this.getListProduct()
+
+            // menampilkan pesan sucess
+            swalSuccess(result.data.message)
+
+            // kembali menampil table product
+            this.isVisable = 'card-table'
+
              } catch(error) {
                 if(error.response && error.response.status == 422) {
                    let responseErrorBe = error.response.data.errors
@@ -87,6 +118,9 @@ function stateListProduct() {
                     for(let key in responseErrorBe) {
                         this.errors[key] = responseErrorBe[key][0]
                     }
+
+                this.isProcessSubmit = false
+
                 }else {
                     console.log(error)
                 }
