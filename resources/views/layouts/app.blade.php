@@ -20,7 +20,7 @@
         {{-- menyisipkan link cdn css dari flowbite   --}}
         {{-- <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" /> --}}
         <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
-       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 
         {{-- menyisipkan link cdn javascript dari flowbite   --}}

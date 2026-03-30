@@ -8,9 +8,6 @@
                 Nama
             </th>
             <th scope="col" class="px-6 py-3 font-medium">
-                Kode Produk
-            </th>
-            <th scope="col" class="px-6 py-3 font-medium">
                 Harga
             </th>
             <th scope="col" class="px-6 py-3 font-medium">
@@ -36,9 +33,6 @@
                     <td x-text="product.name" class="px-6 py-4">
 
                     </td>
-                    <td x-text="product.code" class="px-6 py-4">
-
-                    </td>
                     <td x-text="product.price" class="px-6 py-4">
 
                     </td>
@@ -47,13 +41,15 @@
                     </td>
                     <td class="px-6 py-4">
                     {{-- start pengecekan jumlah stok produk --}}
-                    <template x-if="product.stocks">
-                        <p>ada stok produk</p>
-                    </template>
+                    {{-- <template x-if="product.stocks">
+                        <template x-for="stock in product.stocks" :key="stock.id">
+                            <p x-on:click="demoBtnEdit(product.id)" class="cursor-pointer" x-text="stock.quantity"></p>
+                        </template>
+                    </template> --}}
                     {{-- end pengecekan jumlah stok produk --}}
                     </td>
-                    <td class="px-6 py-4 text-right">
-                        <a href="#" class="font-medium text-fg-brand hover:underline">Edit</a>
+                   <td class="px-6 py-4 gap-2 text-right inline-flex">
+                        <button x-on:click="btnDeleteProduct" type="button" class="font-medium text-fg-brand hover:underline">delete</button>
                     </td>
                 </tr>
             </template>

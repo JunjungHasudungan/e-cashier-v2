@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="py-12" x-data="stateListProduct()">
+    <div class="py-12" x-data="stateListProduct()" x-cloak>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
@@ -144,6 +144,7 @@
                         x-show="isVisable == 'card-table'"
                         class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default">
                        @include('admin._card_table')
+                       {{-- @include('admin._demo_card_table') --}}
                     </div>
                     {{-- end komponent table --}}
                 </div>

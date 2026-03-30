@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             // code membuat nama product untuk field dalam table products
             $table->string('name');
-            $table->string('code');
+            // $table->string('code');
             $table->integer('price');
             $table->string('size');
             $table->timestamps();

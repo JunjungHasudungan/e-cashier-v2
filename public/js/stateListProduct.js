@@ -19,6 +19,9 @@ function stateListProduct() {
         // variable penampung nilai untuk kondisi process pengiriman
         isProcessSubmit: false,
 
+        // variable penampung original data product dengan relasi stocks
+        originalProduct: {name: '', quantity: '', price: '', size: '', description: ''},
+
         // menggunakan fungsi init untuk menginisilasisasi fungsi pertama kali dirender
         init() {
             // menggunakan kembali fungsi getListProduct
@@ -148,6 +151,7 @@ function stateListProduct() {
                 // tandai bahwa data sudah selesai dimuat (berhasil atau gagal)
                 this.isEmpty = true
             }
-        }
+        },
+       btnDeleteProduct() {  }
     }
 }

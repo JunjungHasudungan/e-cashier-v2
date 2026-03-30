@@ -8,6 +8,36 @@ use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
+    // fungsi untuk megambil data product berdasarkan productId
+    public function getProductById($productId) {
+        try {
+            // mengambil data kedalam table product
+            $product = Product::where('id', $productId)->with(['stocks' => function($query) {
+                $query->where('status', 'in-stock');
+            }])->first();
+
+            // menimpa nilai product quantity ke front-end
+            $dataProduct = [
+                'product_id'    => $product->id,
+                'name'          => $product->name,
+                'size'          => $product->size,
+                'quantity'      => optional($product->stocks->first())->quantity ?? 0,
+                'description'   => $product->description
+            ];
+
+            // mengembalikan data response berbentuk json
+           return response()->json([
+            'message'   => 'get product successfully',
+            'response'      => $dataProduct
+           ]);
+        } catch (\Exception $error) {
+            // mengembalikan response error berbentuk json
+            return response()->json([
+                'message'   => $error->getMessage()
+            ]);
+        }
+     }
+
     // pembuatan fungsi index untuk melemparkan tampilan halaman
     public function index() {
         return view('admin.index');
@@ -76,12 +106,28 @@ class AdminController extends Controller
     // membuat fungsi untuk mengambil data product beserta relasi table stock
     public function getListProduct() {
         try {
-            $listProduct = Product::with('stocks')->get();
+            // mengubah query untuk mengambil data product dengan relasi stocks dimana status adalah in-stock
+            $listProduct = Product::with(['stocks' => function($query){
+                $query->where('status', 'in-stock');
+            }])->get();
+
+            // merubah format response API dengan cara maping data
+            $dataListProduct = $listProduct->map(function($product){
+                return [
+                    'id'            => $product->id,
+                    'name'          => $product->name,
+                    'size'          => $product->size,
+                    'stocks'        => $product->stocks->first(),
+                    'price'         => $product->price,
+                    'description'   => $product->description,
+                ];
+            });
+
 
             // mengembalikan data product berbentuk response json
             return response()->json([
                 'message'   => 'get data list product successfully',
-                'data'      => $listProduct
+                'data'      => $dataListProduct
             ]);
 
         } catch (\Exception $error) {
