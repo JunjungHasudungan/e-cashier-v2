@@ -152,6 +152,14 @@ function stateListProduct() {
                 this.isEmpty = true
             }
         },
-       btnDeleteProduct() {  }
+        async btnDeleteProduct(productId) {
+            try{
+                // mengirim product ke url dengan method delete
+                await axios.delete(`product/${productId}/delete`)
+            }catch(error){
+                console.log(error)
+            }
+            console.log(productId)
+        }
     }
 }

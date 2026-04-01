@@ -49,7 +49,7 @@
                     {{-- end pengecekan jumlah stok produk --}}
                     </td>
                    <td class="px-6 py-4 gap-2 text-right inline-flex">
-                        <button x-on:click="btnDeleteProduct" type="button" class="font-medium text-fg-brand hover:underline">delete</button>
+                        <button x-on:click="btnDeleteProduct(product.id)" type="button" class="font-medium text-fg-brand hover:underline">delete</button>
                     </td>
                 </tr>
             </template>
