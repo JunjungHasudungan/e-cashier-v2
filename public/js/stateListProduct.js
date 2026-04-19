@@ -94,7 +94,7 @@ function stateListProduct() {
               }
 
              // mengirim data ke BE lewat jalur store-post
-            const result = await axios.post('store-product', newDataProduct)
+            const result = await axios.post('product', newDataProduct)
 
             // melakukan reset seluruh field
             this.resetField()
@@ -129,8 +129,6 @@ function stateListProduct() {
                 }
               }
             // mengosongkan seluruh field objek errors
-
-
          },
 
         // membuat fungsi mengambil data product dari BE
@@ -138,7 +136,7 @@ function stateListProduct() {
             // menggunakan try and catch agar menghandle kondisi error bila data tidak
             try {
                 // mengambil data melalui url yang sudah disediakan dari BE
-                const result = await axios.get('list-product')
+                const result = await axios.get('products')
 
                 // memasukkan data kedalam variable array listProduct
                 this.listProduct = result.data.data
@@ -152,14 +150,24 @@ function stateListProduct() {
                 this.isEmpty = true
             }
         },
+
         async btnDeleteProduct(productId) {
-            try{
-                // mengirim product ke url dengan method delete
-                await axios.delete(`product/${productId}/delete`)
-            }catch(error){
+            try {
+                // membuat alert confirmation
+                let confirmation = confirm('yakin menghapus?')
+                // mengecek jika tidak ada konfirmasi, akan kembali keawal
+                if(!confirmation) return
+
+                // mengirim parameter productId kedalam jalur Backend
+                let result = await axios.delete(`product/${productId}/delete`)
+                // menampilkan pesan yang dikirim dari Backend
+                swalSuccess(result.data.message)
+
+                // reload data products yang ada ditable
+                this.getListProduct()
+            } catch (error) {
                 console.log(error)
             }
-            console.log(productId)
         }
     }
 }

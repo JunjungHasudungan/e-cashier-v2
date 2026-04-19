@@ -4,15 +4,15 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-
         <title>{{ config('app.name', 'Laravel') }}</title>
-
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        {{-- menyisipkan link cdn sweatalert2  --}}
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="{{ asset('js/helper.js') }}"></script>
         {{-- melakukan registrasi alamat stateListProduct.js --}}
         <script src="{{ asset('js/stateListProduct.js') }}"></script>
-        <script src="{{ asset('js/helper.js') }}"></script>
         <script src="{{ asset('js/demoStateListProduct.js') }}"></script>
         <script src="{{ asset('js/demoHelperFun.js') }}"></script>
         {{-- <link rel="stylesheet" href="{{asset("css/style.css")}}"> --}}
@@ -20,8 +20,6 @@
         {{-- menyisipkan link cdn css dari flowbite   --}}
         {{-- <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" /> --}}
         <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 
         {{-- menyisipkan link cdn javascript dari flowbite   --}}
         <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>

@@ -34,18 +34,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::view('profits', 'admin.profits.index')->name('profits');
     // route untuk mengambil list-product
-    Route::get('list-product', [AdminController::class, 'getListProduct'])->name('list-product');
+    Route::get('products', [AdminController::class, 'getListProduct'])->name('products.list');
 
     // mengirim data ke BE
-    Route::post('store-product', [AdminController::class, 'storeProduct'])->name('store-product');
+    Route::post('product', [AdminController::class, 'storeProduct'])->name('product.store');
 
-    // route untuk melakukan delete product dan stock
-    Route::delete('product/{productId}/delete')->name('product.delete');
-    
     // jalur mengambil data product berdasarkan productId
-    Route::get('data-product-by/{productId}', [AdminController::class, 'getProductById'])
-        ->name('data-product-by');
+    Route::get('product/{productId}/show', [AdminController::class, 'getProductById'])->name('product.show');
 
+    // jalur untuk menghapus data product berdasaarkan parameter yang dikirim dari frontend
+    Route::delete('product/{productId}/delete', [AdminController::class, 'deleteProduct'])
+        ->name('product.delete');
 
     // route untuk melakukan store data demo create produk
     Route::post('demo-store-product', [AdminController::class, 'demoStoreDataProduct'])->name('demo-store-product');

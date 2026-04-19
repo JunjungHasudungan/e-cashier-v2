@@ -138,6 +138,33 @@ class AdminController extends Controller
         }
     }
 
+    // fungsi untuk menghapus data product melalui variable parameter
+    public function deleteProduct($productId) {
+        try {
+            // menemukan data product melalui class model Product
+            $product = Product::with('stocks')->findOrFail($productId);
+
+            // mengecek jika ada data relasi stock ke table product untuk menghapus data stock
+            if($product->stocks()->exists()) {
+                // menghapus data stocks terlebih dahulu
+                $product->stocks()->delete();
+                // menghapus data product
+                $product->delete();
+            }
+            // langsung menghapus data product
+            $product->delete();
+            // mengengembalikan response pesan berbentuk json ke frontend
+            return response()->json([
+                'message'   => 'produk berhasil dihapus'
+            ],200);
+        } catch (\Exception $error) {
+            //mengembalikan pesan error ke frontend
+            return response()->json([
+                'error' => $error->getMessage()
+            ], 500);
+        }
+    }
+
     // fungsi untuk melakukan logic bisnis penyimpanan data baru ke database
     public function demoStoreDataProduct(Request $request) {
         try {

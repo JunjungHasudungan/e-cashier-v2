@@ -12,8 +12,5 @@ function swalSuccess(message) {
         }
     });
 
-    Toast.fire({
-    icon: "success",
-    title: message
-    });
+    Toast.fire({ icon: "success", title: message });
 }

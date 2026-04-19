@@ -28,28 +28,19 @@
             <template x-for="(product, index) in listProduct" :key="index">
                 <tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
                     <th x-text="index + 1" scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
-
                     </th>
-                    <td x-text="product.name" class="px-6 py-4">
-
-                    </td>
-                    <td x-text="product.price" class="px-6 py-4">
-
-                    </td>
-                    <td x-text="product.size" class="px-6 py-4">
-
-                    </td>
+                    <td x-text="product.name" class="px-6 py-4"></td>
+                    <td x-text="product.price" class="px-6 py-4"></td>
+                    <td x-text="product.size" class="px-6 py-4"></td>
                     <td class="px-6 py-4">
-                    {{-- start pengecekan jumlah stok produk --}}
-                    {{-- <template x-if="product.stocks">
-                        <template x-for="stock in product.stocks" :key="stock.id">
-                            <p x-on:click="demoBtnEdit(product.id)" class="cursor-pointer" x-text="stock.quantity"></p>
-                        </template>
-                    </template> --}}
-                    {{-- end pengecekan jumlah stok produk --}}
                     </td>
                    <td class="px-6 py-4 gap-2 text-right inline-flex">
-                        <button x-on:click="btnDeleteProduct(product.id)" type="button" class="font-medium text-fg-brand hover:underline">delete</button>
+                        <button
+                            x-on:click="btnDeleteProduct(product.id)"
+                            type="button"
+                            class="font-medium text-fg-brand hover:underline">
+                        delete
+                        </button>
                     </td>
                 </tr>
             </template>
