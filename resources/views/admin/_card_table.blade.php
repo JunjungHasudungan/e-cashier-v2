@@ -49,7 +49,9 @@
             </template>
             {{-- end melakukan perulangan --}}
         </template>
-            {{-- end melakukan pengecekan jika data listProduct lebih dari 0 --}}
-
+        {{-- end melakukan pengecekan jika data listProduct lebih dari 0 --}}
+        <template x-if="listProduct.length == 0">
+            @include('admin._card_alert_info')
+        </template>
     </tbody>
 </table>

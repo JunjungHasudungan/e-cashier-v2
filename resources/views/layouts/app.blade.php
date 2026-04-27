@@ -15,7 +15,6 @@
         <script src="{{ asset('js/stateListProduct.js') }}"></script>
         <script src="{{ asset('js/demoStateListProduct.js') }}"></script>
         <script src="{{ asset('js/demoHelperFun.js') }}"></script>
-        {{-- <link rel="stylesheet" href="{{asset("css/style.css")}}"> --}}
         <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
         {{-- menyisipkan link cdn css dari flowbite   --}}
         {{-- <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" /> --}}
@@ -26,6 +25,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @stack('scripts')
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">

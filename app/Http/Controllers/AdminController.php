@@ -41,7 +41,6 @@ class AdminController extends Controller
     // pembuatan fungsi index untuk melemparkan tampilan halaman
     public function index() {
         return view('admin.index');
-        // return view('admin.index_demo');
     }
 
     public function storeProduct(Request $request) {
@@ -108,11 +107,9 @@ class AdminController extends Controller
         try {
             // mengubah query untuk mengambil data product dengan relasi stocks dimana status adalah in-stock
            $dataListProduct = Product::with(['stocks' => function($query){
-                $query->where('status', 'in-stock')->latest()->limit(1);
+                $query->where('status', 'in-stock')->latest();
            }])->get();
 
-
-        //    dd($dataListProduct);
             // mengubah struktur data product dimana data stoks mengambil hanya 1 data saja
             $data = $dataListProduct->map(function($product){
                 return [

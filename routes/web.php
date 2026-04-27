@@ -32,8 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // ====== ROUTE FOR ADMIN =======
     Route::get('admin-dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
 
-    Route::view('profits', 'admin.profits.index')->name('profits');
-    // route untuk mengambil list-product
+    // nama url untuk mengambil list-product
     Route::get('products', [AdminController::class, 'getListProduct'])->name('products.list');
 
     // mengirim data ke BE
@@ -52,6 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // route untuk melakukn penghapusan demo delete produk
     Route::delete('demo-delete-product/{productId}', [AdminController::class, 'demoDeleteProduct'])->name('demo-delete-product');
 
+    Route::view('profits', 'admin.profits.index')->name('profits');
 
     // ROUTES FOR CASHIER
     Route::get('cashier-dashboard', [CashierController::class, 'index'])->name('cashier-dashboard');

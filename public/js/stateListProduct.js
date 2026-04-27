@@ -19,6 +19,9 @@ function stateListProduct() {
         // variable penampung nilai untuk kondisi process pengiriman
         isProcessSubmit: false,
 
+        // variable penampung pesan yang akan terjadi
+        alertMessage: { list_product: '' },
+
         // variable penampung original data product dengan relasi stocks
         originalProduct: {name: '', quantity: '', price: '', size: '', description: ''},
 
@@ -141,6 +144,11 @@ function stateListProduct() {
                 // memasukkan data kedalam variable array listProduct
                 this.listProduct = result.data.data
 
+                // melakukan pengecekan data bla list product  ada atau bila tidak ada data
+                this.alertMessage.list_product = 
+                    this.listProduct.length > 0 
+                    ? this.listProduct 
+                    : 'data produk belum tersedia'
                 console.log('data dari BE', this.listProduct)
             } catch (error) {
                 // menampilkan pesan error kedalam console
