@@ -107,27 +107,26 @@ class AdminController extends Controller
     public function getListProduct() {
         try {
             // mengubah query untuk mengambil data product dengan relasi stocks dimana status adalah in-stock
-            $listProduct = Product::with(['stocks' => function($query){
-                $query->where('status', 'in-stock');
-            }])->get();
+           $dataListProduct = Product::with(['stocks' => function($query){
+                $query->where('status', 'in-stock')->latest()->limit(1);
+           }])->get();
 
-            // merubah format response API dengan cara maping data
-            $dataListProduct = $listProduct->map(function($product){
+
+        //    dd($dataListProduct);
+            // mengubah struktur data product dimana data stoks mengambil hanya 1 data saja
+            $data = $dataListProduct->map(function($product){
                 return [
-                    'id'            => $product->id,
-                    'name'          => $product->name,
-                    'size'          => $product->size,
-                    'stocks'        => $product->stocks->first(),
-                    'price'         => $product->price,
-                    'description'   => $product->description,
-                ];
-            });
-
-
+                    'id'    => $product->id,
+                    'name'  => $product->name,
+                    'price' => $product->price,
+                    'size'  => $product->size,
+                    'stocks' => $product->stocks->first() ?? 0
+                 ];
+             });
             // mengembalikan data product berbentuk response json
             return response()->json([
                 'message'   => 'get data list product successfully',
-                'data'      => $dataListProduct
+                'data'      => $data
             ]);
 
         } catch (\Exception $error) {

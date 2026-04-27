@@ -15,6 +15,8 @@ class Stock extends Model
     // registrasi nama field table stocks
     protected $fillable = ['quantity', 'status', 'created_by', 'product_id'];
 
+    public $timestamps = true;
+    
     // registrasi nama relasi table stocks ketable products
     public function product() {
         return $this->belongsTo(Stock::class);
