@@ -33,9 +33,9 @@
                     <td x-text="product.price" class="px-6 py-4"></td>
                     <td x-text="product.size" class="px-6 py-4"></td>
                     <td class="px-6 py-4">
-                        <span x-text="product.stocks.quantity ? product.stocks.quantity : 'tidak ada stok'"
+                        <button type="button" x-on:click="btnRestock(product.id)"  x-text="product.stocks.quantity ? product.stocks.quantity : 'tidak ada stok'"
                         x-bind:class="product.stocks.quantity ? 'inline-block hover:font-bold hover:underline hover:text-red-900 cursor-pointer transition'  : 'cursor-default'">
-                        </span>
+                        </button>
                     </td>
                    <td class="px-6 py-4 gap-2 text-right inline-flex">
                         <button
