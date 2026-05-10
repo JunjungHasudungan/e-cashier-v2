@@ -22,5 +22,5 @@ Bisa juga mengunjugi beberapa link materi yang dapat dipelajari
 
 ### PROFILE
 - **[Lelaki Sambat](https://x.com/jung_doeng)**
-- **[Tighten Co.](https://www.youtube.com/@junjunghasudungan1905)**
+- **[JunjungHasudungan](https://www.youtube.com/@junjunghasudungan1905)**
 
