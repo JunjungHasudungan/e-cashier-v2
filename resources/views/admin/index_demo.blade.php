@@ -27,8 +27,17 @@
                         class="bg-gray-200 fixed inset-0 z-50 flex items-center justify-center w-full bg-black/40">
                         @include('admin._demo_card_create')
                     </div>
-
                     {{-- end komponent toggle form create product --}}
+
+                    <div
+                        {{-- directive untuk menampilkan card create product --}}
+                        x-show="isCurrentCard == 'restock-product'"
+                        class="bg-gray-200 fixed inset-0 z-50 flex items-center justify-center w-full bg-black/40">
+                        @include('admin._card_restock_product')
+                    </div>
+                    
+                    {{-- end komponent toggle form create product --}}
+
                     {{-- start komponent table --}}
                     <div
                     {{-- directive untuk menampilkan card table product --}}

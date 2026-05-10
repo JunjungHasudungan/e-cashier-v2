@@ -2,10 +2,9 @@
 // penamaan alamat file didalam folder secara otomatis dibuat
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\{Validator, DB};
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     // fungsi untuk megambil data product berdasarkan productId
@@ -132,6 +131,40 @@ class AdminController extends Controller
                 'message'   => $error->getMessage()
             ], 500); // mengembalikan pesan error internal server error
         }
+    }
+
+    public function getProduct(string $productId) {
+       try {
+        // menyeleksi kolom yang akan ditampilkan
+        $selectColum = [
+            'products.id as product_id',
+            'products.name as product_name',
+            'products.price as product_price',
+            'products.size as product_size',
+            'stocks.id as stock_id',
+            'stocks.product_id as stock_product_id',
+            'stocks.quantity as stock_quantity',
+            'stocks.status as stock_status',
+            'stocks.created_by as stock_created_by'
+        ];
+        // mengambil data product kedalam table products melalui model Product
+        $dataProduct = DB::table('products')
+            ->leftJoin('stocks','products.id', '=', 'stocks.product_id')
+            ->where('stocks.status', 'in-stock')->orderByDesc('stocks.created_at')
+            ->select($selectColum)
+            ->where('products.id', $productId)->first();
+
+        // mengembalikan data product ke FE seperti yang diharapkan
+        return response()->json([
+            'message'   => 'get product succcessfuly',
+            'response'  => $dataProduct
+        ], 200);
+       } catch (\Exception $error) {
+        // mengembalikan response berbentuk json ketika ada error typo nama table yg digunakan
+        return response()->json([
+            'error'   => $error->getMessage()
+        ], 500);
+       }
     }
 
     // fungsi untuk menghapus data product melalui variable parameter

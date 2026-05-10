@@ -25,6 +25,9 @@ function stateListProduct() {
         // variable penampung original data product dengan relasi stocks
         originalProduct: {name: '', quantity: '', price: '', size: '', description: ''},
 
+        // menampung data product dari BE
+        recivedProduct:{},
+
         // menggunakan fungsi init untuk menginisilasisasi fungsi pertama kali dirender
         init() {
             // menggunakan kembali fungsi getListProduct
@@ -33,6 +36,22 @@ function stateListProduct() {
 
         btnCreateProduct() {
             this.isVisable = 'create-product'
+        },
+
+        async btnRestock(productId) {
+            try {
+                // mengambil data product melalui url yang mengirimkan parameter
+                let result = await axios.get(`product/${productId}/edit`)
+                
+                // memasukkan data product ke recivedProduct
+                this.recivedProduct = result.data.response
+                console.log('data', this.recivedProduct)
+
+                // menampilkan kedalam form restock
+                this.isVisable  = 'restock-product'
+            } catch (error) {
+                console.log('error', error)
+            }
         },
 
         closeCreateProduct() {
@@ -54,6 +73,8 @@ function stateListProduct() {
             this.isVisable = 'card-table'
             this.resetFieldErrors()
         },
+
+
 
         // fungsi untuk reset field product
         resetField() {
@@ -145,9 +166,9 @@ function stateListProduct() {
                 this.listProduct = result.data.data
 
                 // melakukan pengecekan data bla list product  ada atau bila tidak ada data
-                this.alertMessage.list_product = 
-                    this.listProduct.length > 0 
-                    ? this.listProduct 
+                this.alertMessage.list_product =
+                    this.listProduct.length > 0
+                    ? this.listProduct
                     : 'data produk belum tersedia'
                 console.log('data dari BE', this.listProduct)
             } catch (error) {

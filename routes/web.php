@@ -38,6 +38,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // mengirim data ke BE
     Route::post('product', [AdminController::class, 'storeProduct'])->name('product.store');
 
+    // mengambil data product berdasarkan product id 
+    Route::get('product/{productId}/edit',[AdminController::class, 'getProduct'])->name('product.edit');
+
     // jalur mengambil data product berdasarkan productId
     Route::get('product/{productId}/show', [AdminController::class, 'getProductById'])->name('product.show');
 
