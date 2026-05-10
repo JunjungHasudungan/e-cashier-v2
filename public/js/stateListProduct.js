@@ -13,6 +13,26 @@ function stateListProduct() {
         // membuat nama objek untuk listSize
         listSize: { kecil: 'kecil', sedang: 'sedang', besar: 'besar' },
 
+        // membuat array untuk list status stock
+        listStatus: [
+            {
+                label: 'In Stock',
+                value: 'in-stock'
+            },
+            {
+                label: 'Returned',
+                value: 'returned'
+            },
+            {
+                label: 'Damaged',
+                value: 'damaged'
+            },
+            {
+                label: 'Re stock',
+                value: 're-stock'
+            }
+        ],
+
         // menambahkan properti untuk menampilkan / menutup card setiap component
         isVisable:'card-table',
 
@@ -42,14 +62,24 @@ function stateListProduct() {
             try {
                 // mengambil data product melalui url yang mengirimkan parameter
                 let result = await axios.get(`product/${productId}/edit`)
-                
+
                 // memasukkan data product ke recivedProduct
                 this.recivedProduct = result.data.response
-                console.log('data', this.recivedProduct)
+                console.log('data', result)
 
                 // menampilkan kedalam form restock
                 this.isVisable  = 'restock-product'
             } catch (error) {
+                console.log('error', error)
+            }
+        },
+
+        async sendRestockProduct(productId) {
+            try {
+                // mengecek data di console
+                console.log('product id', productId)
+            } catch (error) {
+                // mengecek error didalam console
                 console.log('error', error)
             }
         },

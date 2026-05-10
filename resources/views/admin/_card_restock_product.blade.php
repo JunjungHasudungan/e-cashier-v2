@@ -3,7 +3,7 @@
     <div class="relative bg-gray-400 border border-default rounded-base shadow-sm p-4 md:p-6">
 
         <!-- Modal body -->
-        <form @submit.prevent="sendDataProduct">
+        <form @submit.prevent="sendRestockProduct(recivedProduct.product_id)">
             <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
                 <div class="col-span-2 sm:col-span-1">
                     <label
@@ -13,9 +13,10 @@
                     </label>
                     <input
                         type="text"
-                        x-model="product.name"
+                        x-model="recivedProduct.product_name"
                         id="name"
-                        class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                        readonly
+                        class="cursor-not-allowed bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                         placeholder="Type product name"
                     >
                     {{-- menampilkan pesan error nama produk --}}
@@ -30,7 +31,7 @@
                         class="block mb-2.5 text-sm font-medium text-heading">
                         Jumlah Produk
                     </label>
-                <select x-model="product.quantity" id="product.quantity" class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand px-3 py-2.5 shadow-xs placeholder:text-body">
+                <select x-model="recivedProduct.stock_quantity" id="recivedProduct.stock_quantity" class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand px-3 py-2.5 shadow-xs placeholder:text-body">
                         <option selected="">Pilih Jumlah</option>
                         <template x-for="index in 10" :key="index">
                             <option :value="index" x-text="index"></option>
@@ -48,9 +49,10 @@
                     </label>
                 <input
                         type="number"
-                        x-model="product.price"
-                        id="product.price"
-                        class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                        x-model="recivedProduct.product_price"
+                        id="recivedProduct.product_price"
+                        readonly
+                        class="cursor-not-allowed bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                         placeholder="Rp.10000"
                     >
                         <template x-if="errors.price">
@@ -59,17 +61,17 @@
                 </div>
                 <div class="col-span-2 sm:col-span-1">
                     <label
-                        for="product.size"
+                        for="recivedProduct.stock_status"
                         class="block mb-2.5 text-sm font-medium text-heading">
-                        Ukuran Produk
+                        status stok produk
                     </label>
                     <select
-                        x-model="product.size"
-                        id="product.size"
+                        x-model="recivedProduct.stock_status"
+                        id="recivedProduct.stock_status"
                         class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand px-3 py-2.5 shadow-xs placeholder:text-body">
                         <option selected="">Pilih Ukuran</option>
-                        <template x-for="size in listSize" :key="size">
-                            <option :value="size" x-text="size"></option>
+                        <template x-for="status in listStatus" :key="status.value">
+                            <option :value="status.value" x-text="status.label"></option>
                         </template>
                     </select>
                         <template x-if="errors.size">
@@ -83,10 +85,12 @@
                     Keterangan Produk
                     </label>
                     <textarea
-                        x-model="product.description"
-                        id="product.description"
+                        x-model="recivedProduct.product_desciption"
+                        id="recivedProduct.product_desciption"
                         rows="4"
-                        class="block bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body" placeholder="Write product description here"></textarea>
+                        x-text="recivedProduct.product_desciption"
+                        readonly
+                        class="cursor-not-allowed block bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full p-3.5 shadow-xs placeholder:text-body" placeholder="Write product description here"></textarea>
                 </div>
                     <template x-if="errors.description">
                         <p x-text="errors.description" class="mt-2.5 text-sm text-red-400"></p>

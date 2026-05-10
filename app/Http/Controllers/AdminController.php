@@ -8,7 +8,7 @@ use App\Models\Product;
 class AdminController extends Controller
 {
     // fungsi untuk megambil data product berdasarkan productId
-    public function getProductById($productId) {
+    public function getProductById(string $productId) {
         try {
             // mengambil data kedalam table product
             $product = Product::where('id', $productId)->with(['stocks' => function($query) {
@@ -141,6 +141,7 @@ class AdminController extends Controller
             'products.name as product_name',
             'products.price as product_price',
             'products.size as product_size',
+            'products.description as product_desciption',
             'stocks.id as stock_id',
             'stocks.product_id as stock_product_id',
             'stocks.quantity as stock_quantity',
@@ -168,7 +169,7 @@ class AdminController extends Controller
     }
 
     // fungsi untuk menghapus data product melalui variable parameter
-    public function deleteProduct($productId) {
+    public function deleteProduct(string $productId) {
         try {
             // menemukan data product melalui class model Product
             $product = Product::with('stocks')->findOrFail($productId);
@@ -255,7 +256,7 @@ class AdminController extends Controller
     }
 
     // function untuk melakukan penghapusn dat produk
-    public function demoDeleteProduct($productId) {
+    public function demoDeleteProduct(string $productId) {
         try {
                DB::transaction(function() use ($productId) {
                     // menghapus data stock
