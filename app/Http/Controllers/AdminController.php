@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\{Validator, DB};
 use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Models\{Product, Stock};
+
 class AdminController extends Controller
 {
     // fungsi untuk megambil data product berdasarkan productId
@@ -167,6 +168,71 @@ class AdminController extends Controller
         ], 500);
        }
     }
+
+    public function restockProduct(Request $request, string $stockId) {
+        try {
+            $validator = Validator::make($request->all(), [
+                'quantity' => 'required',
+                'status' => 'required',
+                'product_id' => 'required',
+            ],[
+                'status.required' => 'Ukuran Wajib dipilh',
+                'quantity.required' => 'Harga produk wajib disi..',
+            ]);
+
+            // mengecek jika ada pengiriman yang tidak sesuai required
+            if ($validator->fails()) {
+                return response()->json([
+                    'errors'    => $validator->errors()
+                ], 422);
+            }
+
+            $validated = $validator->validated();
+
+            // mengambil data stock
+            $stock = Stock::where('id', $stockId)->first();
+
+            // mengecek validasi stock quantity > dengan stock quantity lama
+            if($validated['status'] == 'returned' && $validated['quantity'] > $stock->quantity) {
+                return response()->json(['errors'  => [
+                    'quantity' => ['jumlah' . $validated['status']. 'lebih besar']
+                    ]
+                ],422);
+            }
+
+            // mengecek jika ada status restock
+            $validated['status'] == 're-stock' ?
+            // benar statusnya re-stock
+            $result_stock = $stock->quantity + $validated['quantity'] :
+            $result_stock = $stock->quantity - $validated['quantity'];
+
+            // membuat stock baru sesuai dengan status yang dikirim
+            Stock::create([
+                'quantity' => $validated['quantity'],
+                'status' => $validated['status'],
+                'created_by' => auth()->user()->name,
+                'product_id' => $validated['product_id']
+            ]);
+
+            //membuat data baru stock dengan status in-stock
+            Stock::create([
+                'quantity' => $result_stock,
+                'status' => 'in-stock',
+                'created_by' => auth()->user()->name,
+                'product_id' => $validated['product_id']
+            ]);
+
+            // mengembalikan response json
+            return response()->json(['message'   => 'restock produk berhasil'], 201);
+
+        } catch (\Throwable $th) {
+            // mengembalikan response json
+            return response()->json(['error'   => $th->getMessage()], 500);
+        }
+    }
+
+
+
 
     // fungsi untuk menghapus data product melalui variable parameter
     public function deleteProduct(string $productId) {

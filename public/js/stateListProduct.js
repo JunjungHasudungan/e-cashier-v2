@@ -48,6 +48,9 @@ function stateListProduct() {
         // menampung data product dari BE
         recivedProduct:{},
 
+        // menampung data product dengan stock sebagai data product original
+        originalRecivedProduct: {},
+
         // menggunakan fungsi init untuk menginisilasisasi fungsi pertama kali dirender
         init() {
             // menggunakan kembali fungsi getListProduct
@@ -62,11 +65,12 @@ function stateListProduct() {
             try {
                 // mengambil data product melalui url yang mengirimkan parameter
                 let result = await axios.get(`product/${productId}/edit`)
-
-                // memasukkan data product ke recivedProduct
-                this.recivedProduct = result.data.response
-                console.log('data', result)
-
+                // menampung sementara data
+                let data =  result.data.response
+                // menampung data ke original product
+                this.originalRecivedProduct = structuredClone(data)
+                // menampung data ke product restock terbaru
+                this.recivedProduct = structuredClone(data)
                 // menampilkan kedalam form restock
                 this.isVisable  = 'restock-product'
             } catch (error) {
@@ -74,14 +78,74 @@ function stateListProduct() {
             }
         },
 
-        async sendRestockProduct(productId) {
-            try {
-                // mengecek data di console
-                console.log('product id', productId)
-            } catch (error) {
-                // mengecek error didalam console
-                console.log('error', error)
+        btnCancelRestock() {
+            if(this.hasChanged()) {
+                // membuat alert confirm
+                let confirmation = confirm('yakin membatalkan?')
+                if(confirmation) {
+                    // menghapus error
+                    this.resetFieldErrors()
+                    // mengembalikan card table
+                    this.isVisable = 'card-table'
+                }
+                return
             }
+            // reset error
+            this.resetFieldErrors()
+
+            // mengembalikan ke card-table
+            this.isVisable = 'card-table'
+        },
+
+        hasChanged() {
+            return JSON.stringify(this.recivedProduct)
+            !== JSON.stringify(this.originalRecivedProduct)
+        },
+
+        async sendRestockProduct(stockId) {
+           try {
+                this.isProcessSubmit = true
+
+                let sendDataProduct = {
+                    product_id: this.recivedProduct.product_id,
+                    status: this.recivedProduct.stock_status,
+                    quantity: this.recivedProduct.stock_quantity
+                }
+
+                let result = await axios.post(`product/${stockId}/restock`, sendDataProduct)
+
+                // megembalikan ke card table
+                this.isVisable = 'card-table'
+
+                // menonaktifkan loading submit
+                this.isProcessSubmit = false
+
+                // reload data didalam table product
+                this.getListProduct()
+
+                console.log('data result',result)
+                // menampilkan pesan berhasil
+                swalSuccess(result.data.message)
+           } catch (error) {
+                if(error.response && error.response.status == 422) {
+                   let responseErrorBe = error.response.data.errors
+
+                   // membersikan error di FE terlebih dahulu
+                   for(let key in this.errors) {
+                        this.errors[key] = ''
+                    }
+
+                    // membongkar data responseErrorBe dengan perulangan
+                    for(let key in responseErrorBe) {
+                        this.errors[key] = responseErrorBe[key][0]
+                    }
+
+                this.isProcessSubmit = false
+
+                }else {
+                    console.log(error)
+                }
+           }
         },
 
         closeCreateProduct() {

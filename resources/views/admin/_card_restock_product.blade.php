@@ -3,7 +3,7 @@
     <div class="relative bg-gray-400 border border-default rounded-base shadow-sm p-4 md:p-6">
 
         <!-- Modal body -->
-        <form @submit.prevent="sendRestockProduct(recivedProduct.product_id)">
+        <form @submit.prevent="sendRestockProduct(recivedProduct.stock_id)">
             <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
                 <div class="col-span-2 sm:col-span-1">
                     <label
@@ -21,7 +21,7 @@
                     >
                     {{-- menampilkan pesan error nama produk --}}
                     <template x-if="errors.name">
-                        <p x-text="errors.name" class="mt-2.5 text-sm text-red-400"></p>
+                        <p x-text="errors.name" class="mt-2.5 text-sm font-bold text-red-600"></p>
                     </template>
 
                 </div>
@@ -110,7 +110,7 @@
 
                 </button>
                 <button
-                    x-on:click="closeCreateProduct"
+                    x-on:click="btnCancelRestock"
                     type="button"
                     x-bind:disabled="isProcessSubmit == true"
                     class="text-body bg-gray-200 box-border border border-default-medium hover:bg-gray-400 rounded-lg hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">

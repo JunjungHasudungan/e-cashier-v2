@@ -4,13 +4,13 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     {{-- start komponent toggle form create product --}}
-                    {{-- <button
+                    <button
                         x-on:click="btnCreateProduct"
                         x-show="isVisable == 'card-table'"
                         class="text-white bg-blue-600 mb-4 rounded-lg box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
                         type="button">
                     Tambah Produk
-                    </button> --}}
+                    </button>
 
                     <!-- Main modal -->
                     <div  x-show="isVisable == 'create-product'"  class="fixed flex z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -39,5 +39,5 @@
     </div>
     @push('scripts')
         <script src="{{ asset('js/stateListProduct.js') }}"></script>
-    @endpush    
+    @endpush
 </x-app-layout>
