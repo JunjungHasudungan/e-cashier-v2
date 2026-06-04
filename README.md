@@ -20,7 +20,7 @@ ada pun beberapa fitur yang akan dibangung
 Bisa juga mengunjugi beberapa link materi yang dapat dipelajari
 - [e-cashier-v2](https://drive.google.com/drive/folders/14qVR9SCoTNhYsuvHTFatHFDDEUZUaChm?usp=sharing).
 
-### PROFILE
-- **[Lelaki Sambat](https://x.com/jung_doeng)**
-- **[JunjungHasudungan](https://www.youtube.com/@junjunghasudungan1905)**
+## MATERI SISIPAN JAVA DASAR
+bisa juga mengunjugi bebarap link materi yang data dipelajari
+-[materi-java-dasar](https://drive.google.com/drive/folders/1I7Hc6TWl-666E7nhsAWl4z0IeEi_k0s0?usp=sharing)
 
