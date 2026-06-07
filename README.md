@@ -24,3 +24,7 @@ Bisa juga mengunjugi beberapa link materi yang dapat dipelajari
 bisa juga mengunjugi bebarap link materi yang data dipelajari
 -[materi-java-dasar](https://drive.google.com/drive/folders/1I7Hc6TWl-666E7nhsAWl4z0IeEi_k0s0?usp=sharing)
 
+
+## SOAL PEMOGRAMAN WEBSITE
+bisa juga mengunjugi link soal praktek pemograman website
+-[soal-pemograman-website](https://drive.google.com/drive/folders/1VZFfSON3KWC-lp3L4DLllOZn0lFwLKHV)
