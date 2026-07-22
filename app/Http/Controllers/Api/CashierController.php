@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 
 class CashierController extends Controller
 {
+    public function getListProduct() {
+        dd('mengambil data product');
+    }
     public function getCustomer() {
         try {
             //code...

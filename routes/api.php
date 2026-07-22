@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::get('products', [CashierController::class, 'getListProduct']);
 Route::get('customers', [CashierController::class, 'getCustomer']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
