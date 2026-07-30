@@ -18,8 +18,8 @@
                             <h5 class="text-xl text-heading font-semibold tracking-tight" x-text="product.name"></h5>
                         </a>
                         <div class="flex items-center justify-between mt-6">
-                            <span class="text-3xl font-extrabold text-heading">$599</span>
-                            <button type="button" class="inline-flex items-center  text-white bg-blue-400 hover:bg-blue-600 box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-lg text-sm px-3 py-2 focus:outline-none">
+                            <span class="text-3xl font-extrabold text-heading" x-text="`Rp` + product.price"></span>
+                            <button x-on:click="addProductToCart(product)" type="button" class="inline-flex items-center  text-white bg-blue-400 hover:bg-blue-600 box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-lg text-sm px-3 py-2 focus:outline-none">
                                 Add to cart
                             </button>
                         </div>

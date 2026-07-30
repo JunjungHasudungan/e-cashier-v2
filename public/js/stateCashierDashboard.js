@@ -3,6 +3,9 @@ function stateCashierDashboard() {
         // registrasi objek / array
         listProduct: [],
 
+        // membuat array untuk menampung order produk kedalam keranjang
+        listProductOnCart: [],
+
         alertMessage: { list_product: '' },
 
         // inisial fungsi pertama kali dirender
@@ -32,6 +35,25 @@ function stateCashierDashboard() {
                 // tandai bahwa data sudah selesai dimuat (berhasil atau gagal)
                 this.isEmpty = true
             }
+        },
+
+        // membuat fungsi addProductToCart
+        addProductToCart(product) {
+            // mengambil data product dalam keranjang
+            let productExist = this.listProductOnCart.find(item => item.id === product.id)
+
+            // melakukan pengecekan data produk ada atau tidak
+            if(productExist) {
+                productExist.qty += 1
+            } else {
+                // menambahkan data objek produk kedalam array
+                this.listProductOnCart.push({
+                    ... product,
+                    qty: 1,
+                    stock: product.stocks.quantity
+                })
+            }
+            console.log('data produk dalam keranjang', this.listProductOnCart)
         },
     }
 }
