@@ -223,6 +223,8 @@ function stateListProduct() {
             // menampilkan pesan sucess
             swalSuccess(result.data.message)
 
+            this.isProcessSubmit = false
+
             // kembali menampil table product
             this.isVisable = 'card-table'
 

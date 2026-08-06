@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('products', [CashierController::class, 'getListProduct']);
 Route::get('customers', [CashierController::class, 'getCustomer']);
 Route::post('customer', [CashierController::class, 'storeCustomer']);
+Route::get('order/{customerId}/detail', [CashierController::class, 'getOrderDetailCustomer']);
+Route::post('store-order', [CashierController::class, 'exampleStoreOrder']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

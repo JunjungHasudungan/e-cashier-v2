@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Validator, DB};
+// use Illuminate\Support\Facades\DB;
 
 class CashierController extends Controller
 {
@@ -79,4 +80,59 @@ class CashierController extends Controller
             return response()->json(['error'   => $error->getMessage()], 500);
         }
     }
+
+    // contoh store order
+    public function exampleStoreOrder(Request $request) {
+        try {
+              $validator = Validator::make($request->all(), [
+                'totalAmount' => 'required',
+                'order_product' => 'required',
+                [
+                    'totalAmount.required'  => 'jumlah pembayaran wajib diisi..',
+                    'order_product.required'  => 'jumlah pembayaran wajib diisi..'
+                ]
+            ]);
+
+            // menampilkan validasi bila error
+            if ($validator->fails()) {
+                return response()->json([
+                    'errors'    => $validator->errors()
+                ], 422);
+            }
+
+            $validated = $validator->validated();
+
+            dd($validated);
+            return response()->json([
+                'message'=> ''
+            ], 201);
+        } catch (\Exception $error) {
+            return response()->json(['message'=> $error->getMessage()], 500);
+        }
+    }
+
+    // fungsi untuk mengambil order Detail punya customer
+    public function getOrderDetailCustomer(string $customerId) {
+        try{
+            // menampilkan data order product customer
+            $orderCustomer = DB::table('orders')
+            ->join('customers', 'orders.customer_id', '=', 'customers.id')
+            ->join('order_detail', 'order_detail.order_id', '=', 'orders.id')
+            ->join('products', 'products.id', '=', 'order_detail.product_id')
+            ->select('orders.*', 'order_detail.*', 'products.*', 'customers.*')
+            ->where('customers.id', $customerId)
+
+            // ->join('orders', 'users.id', '=', 'orders.user_id')
+            // ->select('users.*', 'contacts.phone', 'orders.price')
+            ->get();
+
+            dd($orderCustomer);
+            return response()->json([
+                'message'=> 'get order detail customer successfully'
+            ],200);
+        }catch(\Exception $error){
+            return response()->json(['message'=> $error->getMessage()],500);
+        }
+    }
+
 }

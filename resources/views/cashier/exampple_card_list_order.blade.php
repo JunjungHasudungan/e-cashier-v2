@@ -91,8 +91,31 @@
                     {{-- menampilkan jumlah uang dari customer --}}
                     <tr class="font-semibold text-heading">
                         <th scope="row" class="px-6 py-3 text-base">Jumlah Pembayaran</th>
-                        <td class="px-6 py-3">3</td>
-                        <td class="px-6 py-3">21,000</td>
+                        <td class="px-6 py-3">
+                            <div class="flex flex-col gap-1">
+                             <input
+                                type="number"
+                                id="password"
+                                class="bg-gray-200 rounded-lg border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                                placeholder="Rp.1000"
+                                readonly
+                                x-model.number="exampleOrderProduct.totalAmount"
+                                required
+                                />
+
+                                <template x-if="exampleOrderProduct.totalAmount < exampleTotalHarga">
+                                    <span  class="text-red-500 text-sm font-medium" x-text="exampleMessage.alert"></span>
+                                </template>
+                            </div>
+                        </td>
+                        <td class="px-12 py-3">
+                           <button
+                                x-on:click="examplePayNow()"
+                                type="button"
+                                class="w-full text-white bg-blue-400 box-border border border-transparent hover:bg-blue-400 focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-lg text-sm px-4 py-2.5 focus:outline-none">
+                            pay now
+                            </button>
+                        </td>
                     </tr>
                 </tfoot>
             </template>

@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\{Product, Customer};
+use App\Models\{Order, Product,};
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,12 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('order_detail', function (Blueprint $table) {
             $table->id();
-            // $table->foreignIdFor(Product::class);
-            $table->foreignIdFor(Customer::class)->nullable();
+            $table->foreignIdFor(Product::class);
+            $table->foreignIdFor(Order::class);
             $table->integer('quantity');
-            $table->string('kode_invoice');
             $table->integer('price');
             $table->timestamps();
         });
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('order_detail');
     }
 };
