@@ -8,18 +8,7 @@ function stateCashierDashboard() {
 
         alertMessage: { list_product: '' },
 
-        exampleOrderProduct: { totalAmount: 0, order_product: []},
 
-        exampleMessage: {success: '', alert: ''},
-
-        examplePayment: {
-            amountPaid: 0, // jumlah uang yang harus dibayar sesuai total harga item yang dibeli
-            change: 0, // uang kembali ke pelanggan,
-            cashReceived: 0 // jumlah uang yang diterima oleh cashier
-        },
-
-        // memanpung total harga
-        exampleTotalHarga: 0,
 
         // inisial fungsi pertama kali dirender
         init() {
@@ -92,30 +81,7 @@ function stateCashierDashboard() {
         productOnCart(productId) {
             return this.listProductOnCart.some(item => item.id == productId)
         },
-        async examplePayNow() {
-            // mengambil total harga dari seluruh order
-            this.exampleTotalHarga = this.listProductOnCart.reduce((sum, product)=> sum + (product.price * product.qty), 0)
-
-
-            // pengecekan jumlah uang yang diberikan dengan jumlah total harga semua produk
-            if(this.exampleOrderProduct.totalAmount < this.exampleTotalHarga) {
-                this.exampleMessage.alert = 'uang pembayaran tidak cukup'
-                return
-            }
-
-            // mengirimkan ke BE 
-
-            // memasukkan objek produk kedalam data pesanan
-            this.exampleOrderProduct.order_product = this.listProductOnCart.map((product)=> ({
-                    product_id: product.id,
-                    price: product.price,
-                    qty: product.qty
-
-                })
-            )
-
-            let resut = await axios.post('api/store-order', this.exampleOrderProduct)
-        }
+        
 
 
     }

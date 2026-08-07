@@ -73,29 +73,30 @@
 
             </tbody>
             {{-- melakukan pengecekan jika ada produk dalam keranjang --}}
-            <template x-if="listProductOnCart.length > 0">
-                <tfoot>
-                    {{-- menampilkan jumlah seluruh item dan total harga --}}
-                    <tr class="font-semibold text-heading">
-                        <th scope="row" class="px-6 py-3 text-base">Total Item</th>
-                        <td
-                            class="px-6 py-3"
-                            x-text="listProductOnCart.reduce((sum, product)=> sum + product.qty, 0)"></td>
-                        <td
-                            class="px-6 py-3"
-                            x-text="listProductOnCart.reduce((sum, product)=> sum + (product.qty * product.price), 0)
-                            .toLocaleString('id-ID')"
-                            ></td>
-                    </tr>
-
-                    {{-- menampilkan jumlah uang dari customer --}}
-                    <tr class="font-semibold text-heading">
-                        <th scope="row" class="px-6 py-3 text-base">Jumlah Pembayaran</th>
-                        <td class="px-6 py-3">3</td>
-                        <td class="px-6 py-3">21,000</td>
-                    </tr>
-                </tfoot>
-            </template>
+                <template x-if="listProductOnCart.length > 0">
+                    <tfoot>
+                        {{-- menampilkan total produk dan total total harga --}}
+                        <tr class="font-semibold text-heading">
+                            <th scope="row" class="px-6 py-3 text-base">Total</th>
+                            <td class="px-6 py-3"
+                                x-text="listProductOnCart.reduce((sum, product)=> sum + product.qty,0)">
+                            </td>
+                            <td class="px-6 py-3"
+                                x-text="listProductOnCart.reduce((sum, product)=> sum + (product.qty * product.price),0)">
+                            </td>
+                        </tr>
+                        {{-- menampilkan jumlah bayar dari customer dan tombol bayar --}}
+                        <tr class="font-semibold text-heading">
+                            <th scope="row" class="px-6 py-3 text-base">Total Pembayaran</th>
+                            <td class="px-6 py-3"
+                                x-text="listProductOnCart.reduce((sum, product)=> sum + product.qty,0)">
+                            </td>
+                            <td class="px-6 py-3"
+                                x-text="listProductOnCart.reduce((sum, product)=> sum + (product.qty * product.price),0)">
+                            </td>
+                        </tr>
+                    </tfoot>
+                </template>
         </table>
     </div>
 
