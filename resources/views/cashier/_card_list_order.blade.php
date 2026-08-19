@@ -88,11 +88,26 @@
                         {{-- menampilkan jumlah bayar dari customer dan tombol bayar --}}
                         <tr class="font-semibold text-heading">
                             <th scope="row" class="px-6 py-3 text-base">Total Pembayaran</th>
-                            <td class="px-6 py-3"
-                                x-text="listProductOnCart.reduce((sum, product)=> sum + product.qty,0)">
+                            <td class="px-6 py-3">
+                                <div class="flex flex-col gap-1">
+                                    <input
+                                        type="number"
+                                        id="email"
+                                        x-model.number="dataOrderProduct.jumlah_uang"
+                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                                        placeholder="Rp.10.000"
+                                        required
+                                    />
+                                    <span class="text-white text-base" x-text="dataOrderProduct.jumlah_uang < total_pembayaran ? 'uang tidak cukup' : '' "></span>
+                                </div>
                             </td>
-                            <td class="px-6 py-3"
-                                x-text="listProductOnCart.reduce((sum, product)=> sum + (product.qty * product.price),0)">
+                            <td class="px-6 py-3">
+                                <button
+                                    type="button"
+                                    x-on:click="btnBayar"
+                                    class="text-white bg-blue-400 box-border border border-transparent hover:bg-blue-200 focus:ring-4 focus:ring-blue-200 shadow-xs font-medium leading-5 rounded-lg text-sm px-4 py-2.5 focus:outline-none">
+                                    bayar
+                                </button>
                             </td>
                         </tr>
                     </tfoot>

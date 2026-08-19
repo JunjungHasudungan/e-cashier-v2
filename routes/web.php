@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 
 // registrasi alamat file CashierController beserta dengan alamat folder
 use App\Http\Controllers\CashierController;
+// use App\Http\Controllers\Api\CashierController as Cashier;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -61,6 +62,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // ROUTES FOR CASHIER
     Route::get('cashier-dashboard', [CashierController::class, 'index'])->name('cashier-dashboard');
+    Route::post('checkout-order', [CashierController::class,'storeOrder'])->name('checkout-order');
 });
 
 

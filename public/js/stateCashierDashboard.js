@@ -6,8 +6,11 @@ function stateCashierDashboard() {
         // membuat array untuk menampung order produk kedalam keranjang
         listProductOnCart: [],
 
-        alertMessage: { list_product: '' },
+        alertMessage: { list_product: '', success_order: '', warning_order: '' },
 
+        dataOrderProduct: { jumlah_uang: 0, order_product: [], type: 'website'},
+
+        total_pembayaran: 0,
 
 
         // inisial fungsi pertama kali dirender
@@ -81,7 +84,32 @@ function stateCashierDashboard() {
         productOnCart(productId) {
             return this.listProductOnCart.some(item => item.id == productId)
         },
-        
+        async btnBayar() {
+            try {
+
+
+            this.total_pembayaran = this.listProductOnCart.reduce((sum, objProduct)=> sum +(objProduct.price * objProduct.qty),0)
+
+            if(this.dataOrderProduct.jumlah_uang < this.total_pembayaran ) {
+                this.alertMessage.warning_order = 'uang tidak cukup'
+                return
+            }
+
+            this.dataOrderProduct.order_product = this.listProductOnCart.map((productOrder)=> ({
+               product_id: productOrder.id,
+               qty: productOrder.qty,
+               price: productOrder.price
+            }))
+
+             console.log('data yang mau dikirim', this.dataOrderProduct)
+
+            let result = await axios.post('checkout-order', this.dataOrderProduct)
+            console.log('data yang mau dikirim', result)
+
+            } catch (error) {
+                console.log('error', error)
+            }
+        }
 
 
     }

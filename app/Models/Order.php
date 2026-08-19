@@ -11,7 +11,14 @@ class Order extends Model
 
     protected $table = 'orders';
 
-    protected $fillable = ['kode_invoice', 'customer_id', 'quantity', 'price'];
+    protected $fillable = [
+        'kode_invoice',
+        'customer_id',
+        'user_id',
+        'quantity',
+        'price',
+        'type'
+    ];
 
     // fungsi relasi untuk merelasikan order ke model OrderDetail
     public function orderDetail() {
