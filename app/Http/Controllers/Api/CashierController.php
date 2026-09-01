@@ -139,6 +139,7 @@ class CashierController extends Controller
 
     public function storeOrder(Request $request) {
         try {
+            dd($request->user());
             dd(Auth::id());
              $validator = Validator::make($request->all(), [
                 'jumlah_uang' => 'required|integer',

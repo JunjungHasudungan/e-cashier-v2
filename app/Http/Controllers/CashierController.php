@@ -15,7 +15,7 @@ class CashierController extends Controller
 
     public function storeOrder(Request $request) {
         try {
-           
+
              $validator = Validator::make($request->all(), [
                 'jumlah_uang' => 'required|integer',
                 'type' => 'required|string',
@@ -39,7 +39,7 @@ class CashierController extends Controller
 
 
             //melakukan transaksi
-            DB::transaction(function() use($validated) {
+            $order = DB::transaction(function() use($validated) {
                 // mengambil seluruh product_id dan mengubah kedalam array
                 $productIds = collect($validated['order_product'])->pluck('product_id');
 
@@ -65,25 +65,39 @@ class CashierController extends Controller
                     'price' => $total_harga,
                     'type' => $validated['type']
                  ]);
+                 $data = [];
 
                 // melakukan perulangan bagian order product
                 foreach ($validated['order_product'] as $itemOrder) {
                     $product = $listProduct[$itemOrder['product_id']];
 
                     // melakukan store order_detail
-
+                    $data [] = [
+                        'product_id' => $product->id,
+                        'order_id' =>  $order->id,
+                        'quantity' => $itemOrder['qty'],
+                        'price' => $itemOrder['qty'] * $itemOrder['price']
+                    ];
                     $stock = $product->stocks->first();
 
                     $stock->decrement('quantity', $itemOrder['qty']);
-
-
                 }
 
-             });
+                OrderDetail::insert($data);
+
+                return $order;
+
+            });
+
+            $data_response = [
+                'total_cash'    => $validated['jumlah_uang'],
+                'kembalian'     => $validated['jumlah_uang'] - $order->price,
+            ];
 
 
             return response()->json([
-                'message'=> 'transaksi berhasil'
+                'message'=> 'transaksi berhasil',
+                'response'  =>  $data_response
             ], 201);
 
             //  dd('testing pengiriman dari cashier', $validated);

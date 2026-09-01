@@ -18,23 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('products', [CashierController::class, 'getListProduct']);
 Route::get('customers', [CashierController::class, 'getCustomer']);
 Route::post('customer', [CashierController::class, 'storeCustomer']);
-
+Route::get('order/{customerId}/detail', [CashierController::class, 'getOrderDetailCustomer']);
+Route::post('checkout-order', [CashierController::class,'storeOrder']);
 Route::post('register', [AuthenticationExample::class, 'register']);
-Route::post('login', [AuthenticationExample::class, 'login']);
-Route::post('logout', [AuthenticationExample::class, 'logout'])->middleware('auth:sanctum');
+Route::post('logout', [AuthenticationExample::class, 'logout']);
 
-Route::middleware('auth:sanctum')->group(function(){
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-
-    Route::get('order/{customerId}/detail', [CashierController::class, 'getOrderDetailCustomer']);
-    Route::post('checkout-order', [CashierController::class,'storeOrder']);
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
 });
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-
-
-

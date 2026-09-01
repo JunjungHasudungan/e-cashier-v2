@@ -8,7 +8,7 @@ function stateCashierDashboard() {
 
         alertMessage: { list_product: '', success_order: '', warning_order: '' },
 
-        dataOrderProduct: { jumlah_uang: 0, order_product: [], type: 'website'},
+        dataOrderProduct: { jumlah_uang: 0, order_product: [], type: 'website', uang_kembalian: 0},
 
         total_pembayaran: 0,
 
@@ -87,24 +87,32 @@ function stateCashierDashboard() {
         async btnBayar() {
             try {
 
+                this.total_pembayaran = this.listProductOnCart.reduce((sum, objProduct)=> sum +(objProduct.price * objProduct.qty),0)
 
-            this.total_pembayaran = this.listProductOnCart.reduce((sum, objProduct)=> sum +(objProduct.price * objProduct.qty),0)
+                if(this.dataOrderProduct.jumlah_uang < this.total_pembayaran ) {
+                    this.alertMessage.warning_order = 'uang tidak cukup'
+                    return
+                }
 
-            if(this.dataOrderProduct.jumlah_uang < this.total_pembayaran ) {
-                this.alertMessage.warning_order = 'uang tidak cukup'
-                return
-            }
+                this.dataOrderProduct.order_product = this.listProductOnCart.map((productOrder)=> ({
+                    product_id: productOrder.id,
+                    qty: productOrder.qty,
+                    price: productOrder.price
+                }))
 
-            this.dataOrderProduct.order_product = this.listProductOnCart.map((productOrder)=> ({
-               product_id: productOrder.id,
-               qty: productOrder.qty,
-               price: productOrder.price
-            }))
+                console.log('data yang mau dikirim', this.dataOrderProduct)
 
-             console.log('data yang mau dikirim', this.dataOrderProduct)
+                let result = await axios.post('checkout-order', this.dataOrderProduct)
 
-            let result = await axios.post('checkout-order', this.dataOrderProduct)
-            console.log('data yang mau dikirim', result)
+                this.dataOrderProduct.uang_kembalian = result.data.response.kembalian
+
+                    this.alertMessage.success_order = result.data.message
+
+                setTimeout(()=> {
+                     this.alertMessage.success_order = ''
+                },5000)
+
+                console.log('data yang mau dikirim', result.data.response.kembalian)
 
             } catch (error) {
                 console.log('error', error)

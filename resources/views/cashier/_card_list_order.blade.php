@@ -1,4 +1,10 @@
 <div>
+    <template x-if="alertMessage.success_order">
+        <div class="p-4 mb-4 text-sm text-white rounded-lg bg-green-400" role="alert">
+          <span class="font-medium" x-text="alertMessage.success_order"></span>
+        </div>
+    </template>
+
     <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">LIST ORDER</h2>
 
     <div class="relative overflow-x-auto">
@@ -110,9 +116,25 @@
                                 </button>
                             </td>
                         </tr>
+                        {{-- menampilkan pesan response dari BE --}}
+                        <template x-if="alertMessage.success_order">
+                            <tr class="font-semibold text-heading">
+                                <th scope="row" class="px-6 py-3 text-base">Uang Kembali</th>
+                                <td class="px-6 py-3">
+                                    <div class="flex flex-col gap-1">
+                                        <input
+                                            type="text"
+                                            id="email"
+                                            readonly
+                                            x-model.number="dataOrderProduct.uang_kembalian"
+                                            class="cursor-not-allowed rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                                        />
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
                     </tfoot>
                 </template>
         </table>
     </div>
-
 </div>
