@@ -14,6 +14,7 @@ class Customer extends Model
         'company_name',
         'contact_name',
         'address',
+        'user_id',
         'city',
         'postal_code',
         'country',

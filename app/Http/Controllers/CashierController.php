@@ -37,7 +37,6 @@ class CashierController extends Controller
             }
             $validated = $validator->validated();
 
-
             //melakukan transaksi
             $order = DB::transaction(function() use($validated) {
                 // mengambil seluruh product_id dan mengubah kedalam array
@@ -80,6 +79,14 @@ class CashierController extends Controller
                     ];
                     $stock = $product->stocks->first();
 
+                    // membuat data stock baru degan status
+                    $stock->create([
+                        'quantity'  => $itemOrder['qty'],
+                        'status' => 'saled',
+                        'created_by' => $validated['type'] == 'website' ? auth()->user()->name : auth()->user()->name,
+                        'product_id'    => $product->id
+                    ]);
+
                     $stock->decrement('quantity', $itemOrder['qty']);
                 }
 
@@ -89,9 +96,26 @@ class CashierController extends Controller
 
             });
 
+        //     $dataListProduct = Product::with(['stocks' => function($query){
+        //         $query->where('status', 'in-stock')->latest();
+        //    }])->get();
+
+        //    $product = $dataListProduct->map(function($product){
+        //         return [
+        //             'id'    => $product->id,
+        //             'name'  => $product->name,
+        //             'price' => $product->price,
+        //             'size'  => $product->size,
+        //             'stocks' => $product->stocks->first() ?? 0
+        //          ];
+        //     });
+
+
+            // dd($product);
             $data_response = [
                 'total_cash'    => $validated['jumlah_uang'],
                 'kembalian'     => $validated['jumlah_uang'] - $order->price,
+                // 'product'   => $product
             ];
 
 
