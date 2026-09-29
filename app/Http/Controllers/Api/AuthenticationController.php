@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,13 +14,14 @@ class AuthenticationController extends Controller
     public function register(Request $request) {
         try {
              $validator = Validator::make($request->all(), [
-                'email' => 'required|unique:users|max:255',
                 'name' => 'required',
+                'email' => 'required|unique:users|max:255',
                 'password'=> 'required'
             ], [
+                'name.required' => 'email wajib diisi..',
                 'email.required' => 'email wajib diisi..',
                 'email.unique' => 'email sudah digunakan..',
-                'email.password' => 'password wajib diisi....',
+                'password.required' => 'password wajib diisi....',
             ]);
 
         if ($validator->fails()) {
@@ -48,8 +49,6 @@ class AuthenticationController extends Controller
         return response()->json([
             'message'=> 'Register Berhasil',
             'token' => $token,
-            'token_type'=> 'Bearer',
-            'user'  => $user
         ],201);
 
         } catch (\Throwable $th) {

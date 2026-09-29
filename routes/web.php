@@ -30,39 +30,42 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    // ====== ROUTE FOR ADMIN =======
-    Route::get('admin-dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
+        // ====== ROUTE FOR ADMIN =======
+        Route::middleware(['role:admin'])->group(function () {
+            Route::get('admin-dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
 
-    // nama url untuk mengambil list-product
-    Route::get('products', [AdminController::class, 'getListProduct'])->name('products.list');
+            // nama url untuk mengambil list-product
+            Route::get('products', [AdminController::class, 'getListProduct'])->name('products.list');
 
-    // mengirim data ke BE
-    Route::post('product', [AdminController::class, 'storeProduct'])->name('product.store');
+            // mengirim data ke BE
+            Route::post('product', [AdminController::class, 'storeProduct'])->name('product.store');
 
-    // mengambil data product berdasarkan product id
-    Route::get('product/{productId}/edit',[AdminController::class, 'getProduct'])->name('product.edit');
+            // mengambil data product berdasarkan product id
+            Route::get('product/{productId}/edit',[AdminController::class, 'getProduct'])->name('product.edit');
 
-    // mengirim data restock product berdasarkan stock id
-    Route::post('product/{stockId}/restock',[AdminController::class, 'restockProduct'])->name('product.restock');
+            // mengirim data restock product berdasarkan stock id
+            Route::post('product/{stockId}/restock',[AdminController::class, 'restockProduct'])->name('product.restock');
 
-    // jalur mengambil data product berdasarkan productId
-    Route::get('product/{productId}/show', [AdminController::class, 'getProductById'])->name('product.show');
+            // jalur mengambil data product berdasarkan productId
+            Route::get('product/{productId}/show', [AdminController::class, 'getProductById'])->name('product.show');
 
-    // jalur untuk menghapus data product berdasaarkan parameter yang dikirim dari frontend
-    Route::delete('product/{productId}/delete', [AdminController::class, 'deleteProduct'])
-        ->name('product.delete');
+            // jalur untuk menghapus data product berdasaarkan parameter yang dikirim dari frontend
+            Route::delete('product/{productId}/delete', [AdminController::class, 'deleteProduct'])
+                ->name('product.delete');
 
-    // route untuk melakukan store data demo create produk
-    Route::post('demo-store-product', [AdminController::class, 'demoStoreDataProduct'])->name('demo-store-product');
+            // route untuk melakukan store data demo create produk
+            Route::post('demo-store-product', [AdminController::class, 'demoStoreDataProduct'])->name('demo-store-product');
 
-    // route untuk melakukn penghapusan demo delete produk
-    Route::delete('demo-delete-product/{productId}', [AdminController::class, 'demoDeleteProduct'])->name('demo-delete-product');
+            // route untuk melakukn penghapusan demo delete produk
+            Route::delete('demo-delete-product/{productId}', [AdminController::class, 'demoDeleteProduct'])->name('demo-delete-product');
+        });
 
-    Route::view('profits', 'admin.profits.index')->name('profits');
+        Route::middleware(['role:cashier'])->group(function () {
+             Route::get('cashier-dashboard', [CashierController::class, 'index'])->name('cashier-dashboard');
+            Route::post('checkout-order', [CashierController::class,'storeOrder'])->name('checkout-order');
+        });
 
-    // ROUTES FOR CASHIER
-    Route::get('cashier-dashboard', [CashierController::class, 'index'])->name('cashier-dashboard');
-    Route::post('checkout-order', [CashierController::class,'storeOrder'])->name('checkout-order');
+        Route::view('profits', 'admin.profits.index')->name('profits');
 });
 
 

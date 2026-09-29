@@ -27,13 +27,23 @@ new #[Layout('layouts.guest')] class extends Component
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $validated['password'] = Hash::make($validated['password']);
-
-        event(new Registered($user = User::create($validated)));
+        $user = User::create([
+            'name'  => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role'=> 'cashier'
+        ]);
+        event(new Registered($user = User::create($user)));
 
         Auth::login($user);
 
-        $this->redirect(RouteServiceProvider::HOME, navigate: true);
+         if (auth()->user()->role == 'admin') {
+
+            $this->redirectIntended(route('admin-dashboard', absolute: false), navigate: true);
+        } else {
+             $this->redirectIntended(route('cashier-dashboard', absolute: false), navigate: true);
+        }
+        // $this->redirect(RouteServiceProvider::HOME, navigate: true);
     }
 }; ?>
 

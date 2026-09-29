@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\api\AuthenticationController;
-use App\Http\Controllers\Api\CashierController;
+use App\Http\Controllers\Api\{CashierController, AuthenticationController};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
