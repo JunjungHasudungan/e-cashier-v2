@@ -214,11 +214,12 @@ function stateListProduct() {
              // mengirim data ke BE lewat jalur store-post
             const result = await axios.post('product', newDataProduct)
 
+            console.log('data yang dikirim', result)
             // melakukan reset seluruh field
             this.resetField()
 
             // memanggil kembali data baru dari getLisProduct
-            await this.getListProduct()
+            // await this.getListProduct()
 
             // menampilkan pesan sucess
             swalSuccess(result.data.message)
