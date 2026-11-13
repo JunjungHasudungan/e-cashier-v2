@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Auth, Validator, DB};
 use Illuminate\Support\Str;
 
-// use Illuminate\Support\Facades\DB;
-
 class CashierController extends Controller
 {
     public function getListProduct() {

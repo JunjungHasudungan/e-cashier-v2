@@ -1,21 +1,13 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Api\{CashierController, AuthenticationController};
+use App\Http\Controllers\Api\{
+    CashierController,
+    AuthenticationController,
+    ProductController
+};
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
 Route::get('products', [CashierController::class, 'getListProduct']);
 Route::get('customers', [CashierController::class, 'getCustomer']);
 Route::post('customer', [CashierController::class, 'storeCustomer']);
@@ -31,7 +23,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         });
 
         // mengambil data semua product untk mengakses list product
-        Route::get('products', [AdminController::class, 'getListProduct']);
+        Route::get('list-product', [ProductController::class, 'getListProduct']);
 
        // route untuk logout
         Route::post('logout', [AuthenticationController::class, 'logout']);

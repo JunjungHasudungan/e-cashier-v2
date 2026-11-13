@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Customer;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\{User, Customer};
 use Illuminate\Support\Facades\{Validator, Hash};
-use Illuminate\Testing\Fluent\Concerns\Has;
 
 class AuthenticationController extends Controller
 {
     public function login(Request $request) {
         try {
+
             $validator = Validator::make($request->all(), [
                 'email' => 'required',
                 'password'=> 'required'
@@ -41,6 +40,7 @@ class AuthenticationController extends Controller
 
             $token = $user->createToken('auth_token')->plainTextToken;
 
+
             return response()->json([
                 'message' => 'login successfuly',
                 'role'      => 'user',
@@ -58,6 +58,7 @@ class AuthenticationController extends Controller
                 ], 401);
             }
             $token = $customer->createToken('auth_token')->plainTextToken;
+
              return response()->json([
                 'message' => 'login successfuly',
                 'role'      => 'customer',
@@ -187,6 +188,7 @@ class AuthenticationController extends Controller
                 'token'     => $token
             ]);
         } catch (\Throwable $th) {
+
             return response()->json(['message'=> $th->getMessage()], 500);
         }
     }
