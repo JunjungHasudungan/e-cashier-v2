@@ -61,7 +61,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         Route::middleware(['role:cashier'])->group(function () {
-             Route::get('cashier-dashboard', [CashierController::class, 'index'])->name('cashier-dashboard');
+            // nama url untuk mengambil list-product
+            Route::get('products', [AdminController::class, 'getListProduct'])->name('products.list');
+            Route::get('cashier-dashboard', [CashierController::class, 'index'])->name('cashier-dashboard');
             Route::post('checkout-order', [CashierController::class,'storeOrder'])->name('checkout-order');
         });
 

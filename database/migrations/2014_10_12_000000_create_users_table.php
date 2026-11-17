@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             // menambahkan field baru role dengan nilai default cashier
-            $table->string('role')->default('cashier');
+            $table->string('role')->nullable()->default('cashier');
             $table->rememberToken();
             $table->timestamps();
         });

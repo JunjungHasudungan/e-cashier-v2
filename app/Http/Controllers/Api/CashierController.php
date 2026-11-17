@@ -166,7 +166,6 @@ class CashierController extends Controller
                 // mengambil seluruh product_id dan mengubah kedalam array
                 $productIds = collect($validated['order_product'])->pluck('product_id');
 
-
                 // mengambil seluruh data product melalui productIds
                 $listProduct = Product::with('stocks')->whereIn('id', $productIds)->get()->keyBy('id');
 

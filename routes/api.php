@@ -13,8 +13,6 @@ Route::get('customers', [CashierController::class, 'getCustomer']);
 Route::post('customer', [CashierController::class, 'storeCustomer']);
 Route::post('login', [AuthenticationController::class, 'login']);
 Route::post('register', [AuthenticationController::class, 'register']);
-// melakukan registrasi url untuk register customer
-Route::post('register-customer', [AuthenticationController::class, 'registerCustomer']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     // mengambil data request user ketika login
@@ -25,8 +23,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         // mengambil data semua product untk mengakses list product
         Route::get('list-product', [ProductController::class, 'getListProduct']);
 
+        // melakukan store order product oleh customer
+        Route::post('order-product', [ProductController::class, 'storeOrderProduct']);
+
        // route untuk logout
         Route::post('logout', [AuthenticationController::class, 'logout']);
+
 });
 
 

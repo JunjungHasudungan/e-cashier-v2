@@ -47,6 +47,7 @@ function stateCashierDashboard() {
             // mengambil data product dalam keranjang
             let productExist = this.listProductOnCart.find(item => item.id === product.id)
 
+            console.log('product Exist', product)
             // melakukan pengecekan data produk ada atau tidak
             if(productExist) {
                 productExist.qty += 1
@@ -118,7 +119,5 @@ function stateCashierDashboard() {
                 console.log('error', error)
             }
         }
-
-
     }
 }

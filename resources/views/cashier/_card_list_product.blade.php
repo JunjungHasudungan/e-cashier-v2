@@ -21,7 +21,7 @@
                             <span class="text-3xl font-extrabold text-heading" x-text="`Rp` + product.price"></span>
                             <button
                                 x-on:click="addProductToCart(product)"
-                                x-bind:disabled="productOnCart(product.id)"
+                                x-bind:disabled="product?.stocks?.quantity == 0"
                                 type="button"
                                 class="inline-flex items-center  text-white bg-blue-400 hover:bg-blue-600 box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-lg text-sm px-3 py-2 focus:outline-none">
                                 <span x-text="productOnCart(product.id) ? 'Added' : ' Add to cart' "></span>
