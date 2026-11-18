@@ -20,6 +20,9 @@ ada pun beberapa fitur yang akan dibangung
 Bisa juga mengunjugi beberapa link materi yang dapat dipelajari
 - [e-cashier-v2](https://drive.google.com/drive/folders/14qVR9SCoTNhYsuvHTFatHFDDEUZUaChm?usp=sharing).
 
+Bisa juga mengunjugi beberapa link materi e-cashier-v3 yang dapat dipelajari
+- [e-cashier-v3](https://drive.google.com/drive/folders/1mNfFWCw-S7X_iTVONvCVUmZVNmwIlsVZ?usp=sharing).
+
 ## MATERI SISIPAN JAVA DASAR
 bisa juga mengunjugi bebarap link materi yang data dipelajari
 -[materi-java-dasar](https://drive.google.com/drive/folders/1I7Hc6TWl-666E7nhsAWl4z0IeEi_k0s0?usp=sharing)
